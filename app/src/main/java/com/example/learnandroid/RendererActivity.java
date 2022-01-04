@@ -1,18 +1,37 @@
 package com.example.learnandroid;
 
+import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learnandroid.renderer.ClearRenderer01;
+import com.example.learnandroid.renderer.TriangleRenderer02;
 
 public class RendererActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GLSurfaceView glSurfaceView = new GLSurfaceView(this);
-        glSurfaceView.setRenderer(new ClearRenderer01());
+        // 必须设置，否则会crash
+        // <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+        // 设置opengl版本号
+        glSurfaceView.setEGLContextClientVersion(2);
+
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("buttonId", -1);
+        switch (id) {
+            case R.id.clear_renderer:
+                glSurfaceView.setRenderer(new ClearRenderer01());
+                break;
+            case R.id.triangle_renderer:
+                glSurfaceView.setRenderer(new TriangleRenderer02());
+                break;
+            default:
+                break;
+        }
+
         setContentView(glSurfaceView);
     }
 }

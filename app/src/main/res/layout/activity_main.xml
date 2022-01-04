@@ -16,13 +16,14 @@
     </Button>
 
     <Button
+        android:id="@+id/triangle_renderer"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:text="Triangle02"
+        android:layout_below="@+id/clear_renderer"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:text="text"
-        android:layout_below="@+id/clear_renderer">
+        android:layout_marginStart="10dp">
     </Button>
 
 </RelativeLayout>
