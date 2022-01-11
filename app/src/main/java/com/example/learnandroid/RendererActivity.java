@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learnandroid.renderer.ClearRenderer01;
 import com.example.learnandroid.renderer.TriangleRenderer02;
+import com.example.learnandroid.renderer.TriangleRenderer03;
 
 public class RendererActivity extends AppCompatActivity {
     @Override
@@ -28,6 +29,8 @@ public class RendererActivity extends AppCompatActivity {
             case R.id.triangle_renderer:
                 glSurfaceView.setRenderer(new TriangleRenderer02());
                 break;
+            case R.id.triangle_renderer_with_matrix:
+                glSurfaceView.setRenderer(new TriangleRenderer03());
             default:
                 break;
         }

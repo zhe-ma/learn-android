@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.clear_renderer).setOnClickListener(this);
         findViewById(R.id.triangle_renderer).setOnClickListener(this);
+        findViewById(R.id.triangle_renderer_with_matrix).setOnClickListener(this);
     }
 
     @Override
@@ -23,14 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.clear_renderer:
-            case R.id.triangle_renderer:
-                startActivityByButtonId(view.getId());
-                break;
-            default:
-                break;
-        }
+        startActivityByButtonId(view.getId());
     }
 
     private void startActivityByButtonId(int id) {
