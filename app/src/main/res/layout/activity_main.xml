@@ -36,5 +36,15 @@
         android:layout_marginStart="10dp"
         android:text="Triangle03">
     </Button>
+    <Button
+        android:id="@+id/triangle_renderer_with_color"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/triangle_renderer_with_matrix"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="Triangle04">
+    </Button>
 
 </RelativeLayout>

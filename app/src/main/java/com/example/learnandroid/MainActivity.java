@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.clear_renderer).setOnClickListener(this);
         findViewById(R.id.triangle_renderer).setOnClickListener(this);
         findViewById(R.id.triangle_renderer_with_matrix).setOnClickListener(this);
+        findViewById(R.id.triangle_renderer_with_color).setOnClickListener(this);
     }
 
     @Override
