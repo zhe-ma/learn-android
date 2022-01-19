@@ -6,6 +6,7 @@ import android.util.Log;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 
 public class GLUtil {
     private static final String TAG = "GLUtil";
@@ -19,6 +20,15 @@ public class GLUtil {
         floatBuffer.put(floatData);
         floatBuffer.position(0);
         return floatBuffer;
+    }
+
+    public static ShortBuffer shortArray2ShortBuffer(final short[] shortData) {
+        ShortBuffer shortBuffer = ByteBuffer.allocateDirect(shortData.length * Short.BYTES)
+                .order(ByteOrder.nativeOrder())
+                .asShortBuffer();
+        shortBuffer.put(shortData);
+        shortBuffer.position(0);
+        return shortBuffer;
     }
 
     public static int createProgram(String vertexShaderSource, String fragmentShaderSource) {

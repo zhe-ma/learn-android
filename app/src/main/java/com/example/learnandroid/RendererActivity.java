@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learnandroid.renderer.CircleRenderer05;
 import com.example.learnandroid.renderer.ClearRenderer01;
+import com.example.learnandroid.renderer.PolygonRenderer06;
 import com.example.learnandroid.renderer.TriangleRenderer02;
 import com.example.learnandroid.renderer.TriangleRenderer03;
 import com.example.learnandroid.renderer.TriangleRenderer04;
@@ -39,6 +40,9 @@ public class RendererActivity extends AppCompatActivity {
                 break;
             case R.id.circle_renderer:
                 glSurfaceView.setRenderer(new CircleRenderer05());
+                break;
+            case R.id.polygon_renderer:
+                glSurfaceView.setRenderer(new PolygonRenderer06());
                 break;
             default:
                 break;
