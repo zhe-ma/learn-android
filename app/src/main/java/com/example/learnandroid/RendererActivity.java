@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.learnandroid.renderer.CircleRenderer05;
 import com.example.learnandroid.renderer.ClearRenderer01;
 import com.example.learnandroid.renderer.TriangleRenderer02;
 import com.example.learnandroid.renderer.TriangleRenderer03;
@@ -32,8 +33,13 @@ public class RendererActivity extends AppCompatActivity {
                 break;
             case R.id.triangle_renderer_with_matrix:
                 glSurfaceView.setRenderer(new TriangleRenderer03());
+                break;
             case R.id.triangle_renderer_with_color:
                 glSurfaceView.setRenderer(new TriangleRenderer04());
+                break;
+            case R.id.circle_renderer:
+                glSurfaceView.setRenderer(new CircleRenderer05());
+                break;
             default:
                 break;
         }

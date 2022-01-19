@@ -11,6 +11,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+// 简单的三角形
 public class TriangleRenderer02 implements GLSurfaceView.Renderer {
     private static final String TAG = "TriangleRenderer02";
 

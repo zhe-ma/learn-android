@@ -12,7 +12,7 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:text="Clear01">
+        android:text="背景色01">
     </Button>
 
     <Button
@@ -20,7 +20,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Triangle02"
+        android:text="三角形02"
         android:layout_below="@+id/clear_renderer"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp">
@@ -34,7 +34,7 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:text="Triangle03">
+        android:text="等腰三角形03">
     </Button>
     <Button
         android:id="@+id/triangle_renderer_with_color"
@@ -44,7 +44,18 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:text="Triangle04">
+        android:text="彩色三角形和矩形04">
+    </Button>
+
+    <Button
+        android:id="@+id/circle_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/triangle_renderer_with_color"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="圆形05">
     </Button>
 
 </RelativeLayout>

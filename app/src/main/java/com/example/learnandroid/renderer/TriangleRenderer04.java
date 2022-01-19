@@ -2,19 +2,16 @@ package com.example.learnandroid.renderer;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.opengl.GLU;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.example.learnandroid.utils.GLUtil;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+// 渐变色三角形
 public class TriangleRenderer04 implements GLSurfaceView.Renderer {
     private static final String TAG = "TriangleRenderer04";
 
@@ -57,9 +54,19 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
 
     // 三角形的坐标数组
     private float vertexData[] = {
+            // 三角形
             0.0f, 0.5f, 0.0f, // top
             -0.5f, -0.5f, 0.0f, // bottom left
-            0.5f, -0.5f, 0.0f  // bottom right
+            0.5f, -0.5f, 0.0f,  // bottom right
+
+            // 矩形
+            // 采用GLES20.GL_TRIANGLES的绘图方式，传入所有的三角形顶点。画两个三角形拼成一个矩形
+            0.9f, 0.9f, 0.0f,  // 第一个三角形
+            0.6f, 0.9f, 0.0f,
+            0.6f, 0.6f, 0.0f,
+            0.6f, 0.6f, 0.0f,  // 第二个三角形
+            0.9f, 0.9f, 0.0f,
+            0.9f, 0.6f, 0.0f,
     };
 
     // 三角形顶点个数，这里是三个顶点
@@ -71,6 +78,13 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
             1f, 0f, 0f, 1f,  //
             0f, 1f, 0f, 1f,
             0f, 0f, 1f, 1f,
+
+            0.1f, 0.1f, 1f, 1f,
+            0.2f, 0.1f, 1f, 1f,
+            0.3f, 0.1f, 1f, 1f,
+            0.4f, 0.1f, 1f, 1f,
+            0.5f, 0.1f, 1f, 1f,
+            0.6f, 0.1f, 1f, 1f,
     };
 
     // 顶点坐标数据要转化成FloatBuffer格式
@@ -114,8 +128,8 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
         // 将三角形数据放到buffer中。
         // Java的缓冲区数据存储结构为大端字节序(BigEdian)，而OpenGl的数据为小端字节序（LittleEdian）,
         // 使用OpenGl的时候必须要进行下转换
-        vertexBuffer = GLUtil.getFloatBuffer(vertexData);
-        colorBuffer = GLUtil.getFloatBuffer(triangleColor);
+        vertexBuffer = GLUtil.floatArray2FloatBuffer(vertexData);
+        colorBuffer = GLUtil.floatArray2FloatBuffer(triangleColor);
     }
 
     @Override
