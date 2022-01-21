@@ -43,7 +43,6 @@ public class ClearRenderer01 implements GLSurfaceView.Renderer {
         // GL_ACCUM_BUFFER_BIT: 累积缓冲
         // GL_STENCIL_BUFFER_BIT: 模板缓冲
 
-
         // 颜色缓冲区（COLOR_BUFFER）就是帧缓冲区（FRAME_BUFFER）,你需要渲染的场景最终每一个像素都要写入该缓冲区,然后由它在渲染到屏幕上显示.
         // 深度缓冲区（DEPTH_BUFFER）与帧缓冲区对应,用于记录上面每个像素的深度值,通过深度缓冲区,我们可以进行深度测试,从而确定像素的遮挡关系,保证渲染正确.
         // 模版缓冲（STENCIL_BUFFER）与深度缓冲大小相同,通过设置模版缓冲每个像素的值,我们可以指定在渲染的时候只渲染某些像素,从而可以达到一些特殊的效果.

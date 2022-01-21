@@ -123,7 +123,7 @@ public class TriangleRenderer03 implements GLSurfaceView.Renderer {
         // Matrix.setLookAtM (float[] rm,  //接收相机变换矩阵
         //                    int rmOffset,  //变换矩阵的起始位置（偏移量）
         //                    float eyeX,float eyeY, float eyeZ,  //相机位置
-        //                    float centerX,float centerY,float centerZ,  //观测点位置
+        //                    float centerX,float centerY,float centerZ,  //观测目标点位置
         //                    float upX,float upY,float upZ)  //up向量在xyz上的分量
         Matrix.setLookAtM(viewMatrix, 0, 0, 0, 7f, 0, 0, 0, 0, 1, 0);
 
