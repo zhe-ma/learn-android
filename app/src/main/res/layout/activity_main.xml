@@ -16,6 +16,17 @@
     </Button>
 
     <Button
+        android:id="@+id/test_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:layout_marginLeft="10dp"
+        android:text="测试">
+    </Button>
+
+    <Button
         android:id="@+id/triangle_renderer"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -36,6 +47,7 @@
         android:layout_marginStart="10dp"
         android:text="等腰三角形03">
     </Button>
+
     <Button
         android:id="@+id/triangle_renderer_with_color"
         android:layout_width="150dp"
@@ -78,6 +90,17 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:text="立方体07">
+    </Button>
+
+    <Button
+        android:id="@+id/square_texture_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cube_renderer"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="矩形纹理贴图08">
     </Button>
 
 </RelativeLayout>

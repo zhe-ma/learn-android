@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.circle_renderer).setOnClickListener(this);
         findViewById(R.id.polygon_renderer).setOnClickListener(this);
         findViewById(R.id.cube_renderer).setOnClickListener(this);
+        findViewById(R.id.square_texture_renderer).setOnClickListener(this);
+        findViewById(R.id.test_activity).setOnClickListener(this);
     }
 
     @Override
@@ -32,7 +34,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startActivityByButtonId(int id) {
-        Intent intent = new Intent(this, RendererActivity.class);
+        Intent intent = null;
+        if (id == R.id.test_activity) {
+            intent = new Intent(this, TestActivity.class);
+        } else {
+            intent = new Intent(this, RendererActivity.class);
+        }
+
         intent.putExtra("buttonId", id);
         startActivity(intent);
     }

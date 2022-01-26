@@ -10,6 +10,7 @@ import com.example.learnandroid.renderer.CircleRenderer05;
 import com.example.learnandroid.renderer.ClearRenderer01;
 import com.example.learnandroid.renderer.CubeRenderer07;
 import com.example.learnandroid.renderer.PolygonRenderer06;
+import com.example.learnandroid.renderer.TextureRenderer08;
 import com.example.learnandroid.renderer.TriangleRenderer02;
 import com.example.learnandroid.renderer.TriangleRenderer03;
 import com.example.learnandroid.renderer.TriangleRenderer04;
@@ -47,6 +48,9 @@ public class RendererActivity extends AppCompatActivity {
                 break;
             case R.id.cube_renderer:
                 glSurfaceView.setRenderer(new CubeRenderer07());
+                break;
+            case R.id.square_texture_renderer:
+                glSurfaceView.setRenderer(new TextureRenderer08());
                 break;
             default:
                 break;
