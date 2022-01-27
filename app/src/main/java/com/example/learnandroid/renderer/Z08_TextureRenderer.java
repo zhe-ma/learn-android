@@ -1,8 +1,10 @@
 package com.example.learnandroid.renderer;
 
+import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
+import com.example.learnandroid.utils.FileUtil;
 import com.example.learnandroid.utils.FpsCalculator;
 import com.example.learnandroid.utils.GLUtil;
 import com.example.learnandroid.utils.MvpMatrix;
@@ -18,55 +20,79 @@ import javax.microedition.khronos.opengles.GL10;
 public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "Z08_TextureRenderer";
 
+    // 纹理贴图：把一个纹理（对于2D贴图，可以简单的理解为图片），按照所期望的方式显示在图形的表面。
+
+    // 与渐变色接近，但有些区别：
+    // 渐变色：光栅化过程中，计算出颜色值，然后在片段着色器的时候可以直接赋值
+    // 纹理：光栅化过程中，计算出当前片段在纹理上的坐标位置，然后在片段着色器的中，根据这个纹理上的坐标，去纹理中取出相应的颜色值。
+
+    // 纹理映射
+    // 如果想把一幅纹理映射到相应的几何图元，就必须告诉GPU如何进行纹理映射，也就是为图元的顶点指定恰当的纹理坐标。
+    // 纹理坐标用浮点数来表示，范围一般从0.0到1.0，左上角坐标为（0.0，0.0），右上角坐标为（1.0，0.0），
+    // 左下角坐标为（0.0，1.0），右下角坐标为（1.0，1.0）
+
+    private Bitmap bitmap;
+
     private String vertexShaderCode =
             "precision mediump float;" +  // 声明精度为float类型的中等
                     "attribute vec4 vPosition;" +  // 接收程序传入的顶点
+                    "attribute vec2 vCoordinate;" +  // 接收传入的顶点纹理位置
                     "uniform mat4 vMatrix;" +
+                    "varying vec2 aCoordinate;" +
                     "void main() {" +
                     "   gl_Position = vMatrix*vPosition;" +
+                    "   aCoordinate = vCoordinate;" +
                     "}";
 
     private String fragmentShaderCode =
             "precision mediump float;" +
-                    "uniform vec4 vColor;" +  // 接收程序传入的颜色
+                    "uniform sampler2D vTexture;" +  // 纹理采样器
+                    "varying vec2 aCoordinate;" +  // 纹理坐标
                     "void main() {" +
-                    "   gl_FragColor = vColor;" +
+                    "   gl_FragColor = texture2D(vTexture, aCoordinate);" +  // 进行纹理采样
                     "}";
-
-    // 三角形的颜色数组，rgba
-    private float[] triangleColor = {0.3f, 0.1f, 0.3f, 1f};
 
     // 数组中3个值作为一个坐标点
     private final int VERTEX_COMPONENT_COUNT = 3;
 
     // 矩形
     private float vertexData[] = {
-            -0.5f, 0.5f, 0,
-            0.5f, 0.5f, 0,
-            -0.5f, -0.5f, 0,
-            0.5f, 0.5f, 0,
-            -0.5f, -0.5f, 0,
-            0.5f, -0.5f, 0,
+            -0.5f, 0.5f, 0,   // 点A
+            0.5f, 0.5f, 0,    // 点B
+            -0.5f, -0.5f, 0,  // 点C
+            0.5f, 0.5f, 0,    // 点B
+            -0.5f, -0.5f, 0,  // 点C
+            0.5f, -0.5f, 0,   // 点D
+    };
+
+    private float textureCoord[] = {
+            0.0f, 0.0f,  // 点A
+            1.0f, 0.0f,  // 点B
+            0.0f, 1.0f,  // 点C
+            1.0f, 0.0f,  // 点B
+            0.0f, 1.0f,  // 点C
+            1.0f, 1.0f,  // 点D
     };
 
     // 顶点坐标数据要转化成FloatBuffer格式
     private FloatBuffer vertexBuffer;
 
-    private int program;
+    private FloatBuffer textureCoordBuffer;
 
-    private long frame_count = 0;
+    private int textureId;
+
+    private int program;
 
     private FpsCalculator fpsCalculator = new FpsCalculator();
 
     private MvpMatrix mvpMatrix = new MvpMatrix();
 
+    public Z08_TextureRenderer(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        // 执行GLES20.drawArrays()方法后，GPU开始绘制图形，默认的规则是后生成的像素覆盖前面生成的像素。
-        // 如果没有GLES20.glEnable(GLES20.GL_DEPTH_TEST)语句，本来处于底面不可见的黑色面会把绿色面覆盖，
-        // 看到代码中黑色面的顶点数据是面5在绿色面2的后面， 黑色面和绿色面在x，y坐标上是有重叠的，黑色与绿色重叠部分会被后生成的像素覆盖。
-        // z值就是深度信息，GLES20.glEnable(GLES20.GL_DEPTH_TEST)，就可以识别出黑色面和绿色面的前后位置关系，所有位置靠前的会显示在屏幕上，靠后的像素会被隐覆盖掉。
-
         // 启用深度测试，否则绘制出的颜色混乱
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
@@ -77,6 +103,9 @@ public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
 
         // Java的缓冲区数据存储结构为大端字节序(BigEdian)，而OpenGl的数据为小端字节序（LittleEdian）,
         vertexBuffer = GLUtil.floatArray2FloatBuffer(vertexData);
+        textureCoordBuffer = GLUtil.floatArray2FloatBuffer(textureCoord);
+
+        textureId = GLUtil.loadTexture(bitmap);
     }
 
     @Override
@@ -104,35 +133,35 @@ public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 gl) {
         fpsCalculator.fps();
-        frame_count++;
 
         // 重绘背景
         GLES20.glClearColor(0.3f, 0.2f, 0.1f, 1.0f);
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT| GLES20.GL_DEPTH_BUFFER_BIT);
 
-        drawCube();
+        draw();
     }
 
-    private void drawCube() {
+    private void draw() {
         // 获取顶点着色器中的变换矩阵
         int matrixHandle = GLES20.glGetUniformLocation(program, "vMatrix");
         GLES20.glUniformMatrix4fv(matrixHandle, 1, false, mvpMatrix.getMvpMatrix(), 0);
 
         // 获取顶点着色器中字段vPosition的句柄
         int positionHandle = GLES20.glGetAttribLocation(program, "vPosition");
-
         // 启用该句柄的属性
         GLES20.glEnableVertexAttribArray(positionHandle);
-
         // 设置vPosition的坐标数据
         GLES20.glVertexAttribPointer(positionHandle, VERTEX_COMPONENT_COUNT, GLES20.GL_FLOAT,
                 false, Float.BYTES * VERTEX_COMPONENT_COUNT, vertexBuffer);
 
-        // 设置三角形颜色
-        int colorHandle = GLES20.glGetUniformLocation(program, "vColor");
-        GLES20.glUniform4fv(colorHandle, 1, triangleColor, 0);
-
+        // 设置当前活动的纹理单元为纹理单元0
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        // 将纹理ID绑定到当前活动的纹理单元上
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
+        int textureHandle = GLES20.glGetAttribLocation(program, "vCoordinate");
+        GLES20.glEnableVertexAttribArray(textureHandle);
+        GLES20.glVertexAttribPointer(textureHandle, 2, GLES20.GL_FLOAT, false, Float.BYTES * 2, textureCoordBuffer);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexData.length / VERTEX_COMPONENT_COUNT);
 

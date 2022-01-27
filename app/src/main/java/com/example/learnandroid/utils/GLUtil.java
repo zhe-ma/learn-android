@@ -1,6 +1,8 @@
 package com.example.learnandroid.utils;
 
+import android.graphics.Bitmap;
 import android.opengl.GLES20;
+import android.opengl.GLUtils;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
@@ -58,5 +60,37 @@ public class GLUtil {
         }
 
         return shader;
+    }
+
+    public static int loadTexture(Bitmap bitmap) {
+        int textures[] = new int[1];
+
+        // 创建纹理对象，1代表创建一个纹理对象
+        GLES20.glGenTextures(1, textures, 0);
+
+        if (textures[0] == 0) {
+            Log.e(TAG, "Failed to create texture shader");
+            return 0;
+        }
+
+        // 绑定纹理id到环境的纹理单元
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
+
+        // 设置缩小过滤为使用纹理中坐标最接近的一个像素的颜色作为需要绘制的像素颜色
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,GLES20.GL_NEAREST);
+        // 设置放大过滤为使用纹理中坐标最接近的若干个颜色，通过加权平均算法得到需要绘制的像素颜色
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_LINEAR);
+        // 设置环绕方向S，截取纹理坐标到[1/2n,1-1/2n]。将导致永远不会与border融合
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,GLES20.GL_CLAMP_TO_EDGE);
+        // 设置环绕方向T，截取纹理坐标到[1/2n,1-1/2n]。将导致永远不会与border融合
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,GLES20.GL_CLAMP_TO_EDGE);
+
+        // 加载纹理到显存。 GLES20.GL_TEXTURE_2D是纹理类型，0是纹理的层次，0代表基本图像。最后一个参数是纹理边框尺寸
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+
+        // 解绑纹理id
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+
+        return textures[0];
     }
 }

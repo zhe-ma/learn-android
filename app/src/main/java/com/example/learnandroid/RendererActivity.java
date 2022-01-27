@@ -1,6 +1,7 @@
 package com.example.learnandroid;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import com.example.learnandroid.renderer.Z08_TextureRenderer;
 import com.example.learnandroid.renderer.Z02_TriangleRenderer;
 import com.example.learnandroid.renderer.Z03_TriangleRenderer;
 import com.example.learnandroid.renderer.Z04_TriangleRenderer;
+import com.example.learnandroid.utils.FileUtil;
 
 public class RendererActivity extends AppCompatActivity {
     @Override
@@ -50,7 +52,8 @@ public class RendererActivity extends AppCompatActivity {
                 glSurfaceView.setRenderer(new Z07_CubeRenderer());
                 break;
             case R.id.square_texture_renderer:
-                glSurfaceView.setRenderer(new Z08_TextureRenderer());
+                Bitmap bitmap = FileUtil.loadBitmapFromAssets(this, "screenshot.png");
+                glSurfaceView.setRenderer(new Z08_TextureRenderer(bitmap));
                 break;
             default:
                 break;
