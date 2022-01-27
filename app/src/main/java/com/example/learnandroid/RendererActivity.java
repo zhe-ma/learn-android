@@ -6,14 +6,14 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.learnandroid.renderer.CircleRenderer05;
-import com.example.learnandroid.renderer.ClearRenderer01;
-import com.example.learnandroid.renderer.CubeRenderer07;
-import com.example.learnandroid.renderer.PolygonRenderer06;
-import com.example.learnandroid.renderer.TextureRenderer08;
-import com.example.learnandroid.renderer.TriangleRenderer02;
-import com.example.learnandroid.renderer.TriangleRenderer03;
-import com.example.learnandroid.renderer.TriangleRenderer04;
+import com.example.learnandroid.renderer.Z05_CircleRenderer;
+import com.example.learnandroid.renderer.Z01_ClearRenderer;
+import com.example.learnandroid.renderer.Z07_CubeRenderer;
+import com.example.learnandroid.renderer.Z06_PolygonRenderer;
+import com.example.learnandroid.renderer.Z08_TextureRenderer;
+import com.example.learnandroid.renderer.Z02_TriangleRenderer;
+import com.example.learnandroid.renderer.Z03_TriangleRenderer;
+import com.example.learnandroid.renderer.Z04_TriangleRenderer;
 
 public class RendererActivity extends AppCompatActivity {
     @Override
@@ -29,28 +29,28 @@ public class RendererActivity extends AppCompatActivity {
         int id = intent.getIntExtra("buttonId", -1);
         switch (id) {
             case R.id.clear_renderer:
-                glSurfaceView.setRenderer(new ClearRenderer01());
+                glSurfaceView.setRenderer(new Z01_ClearRenderer());
                 break;
             case R.id.triangle_renderer:
-                glSurfaceView.setRenderer(new TriangleRenderer02());
+                glSurfaceView.setRenderer(new Z02_TriangleRenderer());
                 break;
             case R.id.triangle_renderer_with_matrix:
-                glSurfaceView.setRenderer(new TriangleRenderer03());
+                glSurfaceView.setRenderer(new Z03_TriangleRenderer());
                 break;
             case R.id.triangle_renderer_with_color:
-                glSurfaceView.setRenderer(new TriangleRenderer04());
+                glSurfaceView.setRenderer(new Z04_TriangleRenderer());
                 break;
             case R.id.circle_renderer:
-                glSurfaceView.setRenderer(new CircleRenderer05());
+                glSurfaceView.setRenderer(new Z05_CircleRenderer());
                 break;
             case R.id.polygon_renderer:
-                glSurfaceView.setRenderer(new PolygonRenderer06());
+                glSurfaceView.setRenderer(new Z06_PolygonRenderer());
                 break;
             case R.id.cube_renderer:
-                glSurfaceView.setRenderer(new CubeRenderer07());
+                glSurfaceView.setRenderer(new Z07_CubeRenderer());
                 break;
             case R.id.square_texture_renderer:
-                glSurfaceView.setRenderer(new TextureRenderer08());
+                glSurfaceView.setRenderer(new Z08_TextureRenderer());
                 break;
             default:
                 break;

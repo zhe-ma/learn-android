@@ -7,16 +7,16 @@ import android.opengl.Matrix;
 import com.example.learnandroid.utils.GLUtil;
 
 import java.nio.FloatBuffer;
-import java.util.ArrayList;
+import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /*
-使用GL_TRIANGLE_FAN扇形绘制方式绘制圆形
+使用索引法绘制多边形
  */
-public class CircleRenderer05 implements GLSurfaceView.Renderer {
-    private static final String TAG = "CircleRenderer05";
+public class Z06_PolygonRenderer implements GLSurfaceView.Renderer {
+    private static final String TAG = "Z06_PolygonRenderer";
 
     private String vertexShaderCode =
             "precision mediump float;" +  // 声明精度为float类型的中等
@@ -39,17 +39,34 @@ public class CircleRenderer05 implements GLSurfaceView.Renderer {
     // 数组中3个值作为一个坐标点
     private final int VERTEX_COMPONENT_COUNT = 3;
 
-    // 三角形的坐标数组
-    private float vertexData[];
+    // 多边形的坐标数组
+    private float vertexData[] = {
+            -0.5f, 0.5f, 0.0f,  // 0号顶点
+            0.5f, 0.5f, 0.0f,  // 1号顶点
+            -0.5f, -0.5f, 0.0f,  // 2号顶点
+            0.5f, -0.5f, 0.0f,  // 3号顶点
+    };
 
-    // 渐变色，颜色的顺序和顶点的顺序一致
-    private float[] colorData;
+    // 绘制三角形的顶点索引
+    private short indexes[] = {
+            0, 1, 3,  // 第一个三角形
+            0, 1, 2,  // 第二个三角形
+    };
+
+    private float[] colorData = {
+            0.0f, 1.0f, 0.0f, 1.0f,
+            0.0f, 0.0f, 1.0f, 1.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+            0.0f, 1.0f, 1.0f, 1.0f,
+    };
 
     // 顶点坐标数据要转化成FloatBuffer格式
     private FloatBuffer vertexBuffer;
 
     // 颜色数据要转为FloatBuffer格式
     private FloatBuffer colorBuffer;
+
+    private ShortBuffer indexBuffer;
 
     private int program;
 
@@ -67,47 +84,10 @@ public class CircleRenderer05 implements GLSurfaceView.Renderer {
         // 应用GL程序到Opengl环境
         GLES20.glUseProgram(program);
 
-        // GL_TRIANGLE_FAN：将传入的顶点作为扇面绘制，ABCDEF绘制ABC、ACD、ADE、AEF四个三角形
-        // 扇形绘制多个三角形，三角形足够小的时候，多边形变为圆形
-        ArrayList<Float> points = new ArrayList<>();
-        // 设置圆心坐标
-        points.add(0.0f);
-        points.add(0.0f);
-        points.add(0.0f);
-
-        ArrayList<Float> colors = new ArrayList<>();
-        colors.add(0.0f);
-        colors.add(0.0f);
-        colors.add(0.0f);
-        colors.add(1.0f);
-
-        final int N = 100;  // 将360度分成N份
-        final double R = 0.8f;  // 半径
-        double step = Math.PI * 2 / N;
-        for (double i = 0; i <= Math.PI * 2; i += step) {
-            points.add((float)(R * Math.cos(i)));
-            points.add((float)(R * Math.sin(i)));
-            points.add(0.0f);
-
-            colors.add((float)Math.cos(i));
-            colors.add((float)Math.sin(i));
-            colors.add(0.0f);
-            colors.add(1.0f);
-        }
-
-        vertexData = new float[points.size()];
-        for (int i = 0; i < points.size(); i++) {
-            vertexData[i] = points.get(i);
-        }
-
-        colorData = new float[colors.size()];
-        for (int i = 0; i < colors.size(); i++) {
-            colorData[i] = colors.get(i);
-        }
-
         // Java的缓冲区数据存储结构为大端字节序(BigEdian)，而OpenGl的数据为小端字节序（LittleEdian）,
         vertexBuffer = GLUtil.floatArray2FloatBuffer(vertexData);
         colorBuffer = GLUtil.floatArray2FloatBuffer(colorData);
+        indexBuffer = GLUtil.shortArray2ShortBuffer(indexes);
     }
 
     @Override
@@ -171,8 +151,8 @@ public class CircleRenderer05 implements GLSurfaceView.Renderer {
         // Color信息是4个float值为一组值
         GLES20.glVertexAttribPointer(colorHandle, 4, GLES20.GL_FLOAT, false, 0, colorBuffer);
 
-        // 使用GL_TRIANGLE_FAN方式渲染，顶点数量为vertexData.length / VERTEX_COMPONENT_COUNT
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, vertexData.length / VERTEX_COMPONENT_COUNT);
+        // 索引法绘制
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, indexes.length, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
 
         // 关闭顶点数组句柄
         GLES20.glDisableVertexAttribArray(positionHandle);

@@ -15,8 +15,8 @@ import javax.microedition.khronos.opengles.GL10;
 /*
 绘制纹理到矩形
  */
-public class TextureRenderer08 implements GLSurfaceView.Renderer {
-    private static final String TAG = "TextureRenderer08";
+public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
+    private static final String TAG = "Z08_TextureRenderer";
 
     private String vertexShaderCode =
             "precision mediump float;" +  // 声明精度为float类型的中等

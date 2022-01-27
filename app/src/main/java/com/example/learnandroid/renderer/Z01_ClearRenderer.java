@@ -7,7 +7,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 // 背景色
-public class ClearRenderer01 implements GLSurfaceView.Renderer {
+public class Z01_ClearRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         // 计算机清理机制是，将数据覆盖，而不是像扫地一样将垃圾清理干净

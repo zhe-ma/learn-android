@@ -3,17 +3,18 @@ package com.example.learnandroid.renderer;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.util.Log;
 
-import com.example.learnandroid.utils.GLUtil;
-
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-// 渐变色三角形
-public class TriangleRenderer04 implements GLSurfaceView.Renderer {
-    private static final String TAG = "TriangleRenderer04";
+// 等腰三角形
+public class Z03_TriangleRenderer implements GLSurfaceView.Renderer {
+    private static final String TAG = "Z03_TriangleRenderer";
 
     // attribute，uniform, varying的区别：
     // 1. attribute: attribute变量是只能在vertex shader中使用的变量。
@@ -35,16 +36,13 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
             "precision mediump float;" +  // 声明精度为float类型的中等
                     "attribute vec4 vPosition;" +  // 接收程序传入的顶点
                     "uniform mat4 vMatrix;" +
-                    "attribute vec4 aColor;" +  // 颜色可以直接传给fragmentShader，这里为了学习varying的使用
-                    "varying vec4 vColor;" +  // 传给fragmentShader的变量
                     "void main() {" +
                     "   gl_Position = vMatrix*vPosition;" +
-                    "   vColor = aColor;" +
                     "}";
 
     private String fragmentShaderCode =
             "precision mediump float;" +
-                    "varying vec4 vColor;" +  // 接收顶点着色器传来的变量
+                    "uniform vec4 vColor;" +  // 接收程序传入的颜色
                     "void main() {" +
                     "   gl_FragColor = vColor;" +
                     "}";
@@ -54,44 +52,19 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
 
     // 三角形的坐标数组
     private float vertexData[] = {
-            // 三角形
             0.0f, 0.5f, 0.0f, // top
             -0.5f, -0.5f, 0.0f, // bottom left
-            0.5f, -0.5f, 0.0f,  // bottom right
-
-            // 矩形
-            // 采用GLES20.GL_TRIANGLES的绘图方式，传入所有的三角形顶点。画两个三角形拼成一个矩形
-            0.9f, 0.9f, 0.0f,  // 第一个三角形
-            0.6f, 0.9f, 0.0f,
-            0.6f, 0.6f, 0.0f,
-            0.6f, 0.6f, 0.0f,  // 第二个三角形
-            0.9f, 0.9f, 0.0f,
-            0.9f, 0.6f, 0.0f,
+            0.5f, -0.5f, 0.0f  // bottom right
     };
 
     // 三角形顶点个数，这里是三个顶点
     private final int VERTEX_COUNT = vertexData.length / VERTEX_COMPONENT_COUNT;
 
     // 三角形的颜色数组，rgba
-    // 渐变色，颜色的顺序和顶点的顺序一致
-    private float[] triangleColor = {
-            1f, 0f, 0f, 1f,  //
-            0f, 1f, 0f, 1f,
-            0f, 0f, 1f, 1f,
-
-            0.1f, 0.1f, 1f, 1f,
-            0.2f, 0.1f, 1f, 1f,
-            0.3f, 0.1f, 1f, 1f,
-            0.4f, 0.1f, 1f, 1f,
-            0.5f, 0.1f, 1f, 1f,
-            0.6f, 0.1f, 1f, 1f,
-    };
+    private float[] triangleColor = {0.3f, 0.1f, 0.3f, 1f};
 
     // 顶点坐标数据要转化成FloatBuffer格式
     private FloatBuffer vertexBuffer;
-
-    // 颜色数据要转为FloatBuffer格式
-    private FloatBuffer colorBuffer;
 
     private int program;
 
@@ -128,8 +101,11 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
         // 将三角形数据放到buffer中。
         // Java的缓冲区数据存储结构为大端字节序(BigEdian)，而OpenGl的数据为小端字节序（LittleEdian）,
         // 使用OpenGl的时候必须要进行下转换
-        vertexBuffer = GLUtil.floatArray2FloatBuffer(vertexData);
-        colorBuffer = GLUtil.floatArray2FloatBuffer(triangleColor);
+        vertexBuffer = ByteBuffer.allocateDirect(vertexData.length * Float.BYTES)
+                .order(ByteOrder.nativeOrder())
+                .asFloatBuffer();
+        vertexBuffer.put(vertexData);
+        vertexBuffer.position(0);
     }
 
     @Override
@@ -147,7 +123,7 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
         // Matrix.setLookAtM (float[] rm,  //接收相机变换矩阵
         //                    int rmOffset,  //变换矩阵的起始位置（偏移量）
         //                    float eyeX,float eyeY, float eyeZ,  //相机位置
-        //                    float centerX,float centerY,float centerZ,  //观测点位置
+        //                    float centerX,float centerY,float centerZ,  //观测目标点位置
         //                    float upX,float upY,float upZ)  //up向量在xyz上的分量
         Matrix.setLookAtM(viewMatrix, 0, 0, 0, 7f, 0, 0, 0, 0, 1, 0);
 
@@ -174,7 +150,7 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
             // 赋值前横纵坐标的范围都是(-1, 1)，但是竖屏高度大于宽度，所以纵轴均分到(-1， 1)的单位长度更长，
             // 使得画出三角形的纵轴更长。将纵轴的范围改为(-ratio, ratio)，将纵轴划分更多的份数，那么就可以
             // 将纵轴的范围长度和横轴的一样，这样画出来的横纵则一样。
-            Matrix.orthoM(projectionMatrix, 0, -1, 1, -ratio, ratio, 1, 10);
+             Matrix.orthoM(projectionMatrix, 0, -1, 1, -ratio, ratio, 1, 10);
 
             // 如下赋值，将坐标轴范围改为(-2 ,2)，三角形的顶点是0.5位置,那么画出来的三角形则是四分之一的长度。
 //            Matrix.orthoM(projectionMatrix, 0, -2, 2, -ratio * 2, ratio * 2, 1, 10);
@@ -221,18 +197,14 @@ public class TriangleRenderer04 implements GLSurfaceView.Renderer {
         GLES20.glVertexAttribPointer(positionHandle, VERTEX_COMPONENT_COUNT, GLES20.GL_FLOAT,
                 false, Float.BYTES * VERTEX_COMPONENT_COUNT, vertexBuffer);
 
-        int colorHandle = GLES20.glGetAttribLocation(program, "aColor");
-        GLES20.glEnableVertexAttribArray(colorHandle);
-        // Color信息是4个float值为一组值
-        GLES20.glVertexAttribPointer(colorHandle, 4, GLES20.GL_FLOAT, false, 0, colorBuffer);
+        // 设置三角形颜色
+        int colorHandle = GLES20.glGetUniformLocation(program, "vColor");
+        GLES20.glUniform4fv(colorHandle, 1, triangleColor, 0);
 
         // 使用TRIANGLES方式渲染，顶点数量为3个
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, VERTEX_COUNT);
 
         // 关闭顶点数组句柄
         GLES20.glDisableVertexAttribArray(positionHandle);
-
-        // 关闭颜色数组句柄
-        GLES20.glDisableVertexAttribArray(colorHandle);
     }
 }

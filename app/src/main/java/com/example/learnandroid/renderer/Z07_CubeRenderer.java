@@ -17,8 +17,8 @@ import javax.microedition.khronos.opengles.GL10;
 使用GL_TRIANGLES三角形绘制方式绘制旋转立方体
 注意要启用深度测试
  */
-public class CubeRenderer07 implements GLSurfaceView.Renderer {
-    private static final String TAG = "CubeRenderer07";
+public class Z07_CubeRenderer implements GLSurfaceView.Renderer {
+    private static final String TAG = "Z07_CubeRenderer";
 
     // MVP （Model View Projection）矩阵变换。
     // Model：模型变换，施加在模型上的空间变换，包含平移变换（translateM）、旋转变换（rotateM）、对称变换（transposeM）、缩放变换（scaleM）

@@ -12,8 +12,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 // 简单的三角形
-public class TriangleRenderer02 implements GLSurfaceView.Renderer {
-    private static final String TAG = "TriangleRenderer02";
+public class Z02_TriangleRenderer implements GLSurfaceView.Renderer {
+    private static final String TAG = "Z02_TriangleRenderer";
 
     // attribute，uniform, varying的区别：
     // 1. attribute: attribute变量是只能在vertex shader中使用的变量。
