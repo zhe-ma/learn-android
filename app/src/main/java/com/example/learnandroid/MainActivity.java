@@ -1,10 +1,15 @@
 package com.example.learnandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
@@ -21,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.cube_renderer).setOnClickListener(this);
         findViewById(R.id.square_texture_renderer).setOnClickListener(this);
         findViewById(R.id.test_activity).setOnClickListener(this);
+
+        checkPermissions();
     }
 
     @Override
@@ -43,5 +50,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         intent.putExtra("buttonId", id);
         startActivity(intent);
+    }
+
+    private void checkPermissions() {
+        String[] permissions = {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+        };
+
+        for (String permission : permissions) {
+            int a = ContextCompat.checkSelfPermission(this, permission);
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, 1);
+            }
+        }
     }
 }

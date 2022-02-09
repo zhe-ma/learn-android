@@ -93,4 +93,22 @@ public class GLUtil {
 
         return textures[0];
     }
+
+
+    public static Bitmap readPixels2Bitmap(int x, int y, int width, int height) {
+        ByteBuffer buf = ByteBuffer.allocateDirect(width * height * 4);
+        buf.order(ByteOrder.LITTLE_ENDIAN);
+
+        // GPU渲染完数据在显存，回传内存的唯一方式glReadPixels函数。
+        // 显存也被叫做显示内存、帧缓存，它是用来存储显示芯片处理过或者即将读取的渲染数据。
+        // glReadPixels：读取帧缓冲区的像素。
+        // x， y是描画的图像的左下角的坐标，具体说来，就是相对显示窗的左下角为（0,0）原点的坐标点
+        GLES20.glReadPixels(x, y, width, height, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, buf);
+        buf.rewind();
+
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bmp.copyPixelsFromBuffer(buf);
+
+        return bmp;
+    }
 }

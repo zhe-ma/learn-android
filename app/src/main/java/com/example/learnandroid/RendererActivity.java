@@ -21,6 +21,7 @@ public class RendererActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         GLSurfaceView glSurfaceView = new GLSurfaceView(this);
         // 必须设置，否则会crash
         // <uses-feature android:glEsVersion="0x00020000" android:required="true" />

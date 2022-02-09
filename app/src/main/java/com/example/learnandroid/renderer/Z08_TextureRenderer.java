@@ -3,11 +3,13 @@ package com.example.learnandroid.renderer;
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import com.example.learnandroid.utils.FileUtil;
 import com.example.learnandroid.utils.FpsCalculator;
 import com.example.learnandroid.utils.GLUtil;
 import com.example.learnandroid.utils.MvpMatrix;
+import com.example.learnandroid.utils.PathUtil;
 
 import java.nio.FloatBuffer;
 
@@ -30,6 +32,15 @@ public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
     // 如果想把一幅纹理映射到相应的几何图元，就必须告诉GPU如何进行纹理映射，也就是为图元的顶点指定恰当的纹理坐标。
     // 纹理坐标用浮点数来表示，范围一般从0.0到1.0，左上角坐标为（0.0，0.0），右上角坐标为（1.0，0.0），
     // 左下角坐标为（0.0，1.0），右下角坐标为（1.0，1.0）
+
+    // 纹理：在OpenGL中简单理解就是一张图片
+    // 纹理Id：纹理的直接引用
+    // 纹理单元：纹理的操作容器，有GL_TEXTURE0、GL_TEXTURE1、GL_TEXTURE2等，纹理单元的数量是有限的，最多16个。
+    // 所以在最多只能同时操作16个纹理。在切换使用纹理单元的时候，使用glActiveTexture方法。
+    // 纹理目标：一个纹理单元中包含了多个类型的纹理目标，有GL_TEXTURE_1D、GL_TEXTURE_2D、CUBE_MAP等。
+
+    // OpenGL要操作一个纹理，那么是将纹理ID装进纹理单元这个容器里，然后再通过操作纹理单元的方式去实现的。
+    // 可以加载出很多很多个纹理ID(但要注意爆内存问题)，但只有16个纹理单元，在Fragment Shader里最多同时能操作16个单元。
 
     private Bitmap bitmap;
 
@@ -87,6 +98,9 @@ public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
 
     private MvpMatrix mvpMatrix = new MvpMatrix();
 
+    int surfaceWidth = 0;
+    int surfaceHeight = 0;
+
     public Z08_TextureRenderer(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
@@ -110,6 +124,9 @@ public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        surfaceWidth = width;
+        surfaceHeight = height;
+
         GLES20.glViewport(0, 0, width, height);
 
         mvpMatrix.setViewMatrix(0, 0, 7, 0, 0, 0, 0, 1, 0);
@@ -140,6 +157,12 @@ public class Z08_TextureRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT| GLES20.GL_DEPTH_BUFFER_BIT);
 
         draw();
+
+        if (fpsCalculator.getTotalFrameCount() == 10) {
+            Bitmap bitmap = GLUtil.readPixels2Bitmap(0, 0, surfaceWidth, surfaceHeight);
+            String filepath = PathUtil.getSdOutDir() + TAG + ".png";
+            FileUtil.saveBitmap(bitmap, filepath, Bitmap.CompressFormat.PNG, 100);
+        }
     }
 
     private void draw() {
