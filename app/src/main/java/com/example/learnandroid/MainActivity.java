@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.cube_renderer).setOnClickListener(this);
         findViewById(R.id.square_texture_renderer).setOnClickListener(this);
         findViewById(R.id.test_activity).setOnClickListener(this);
+        findViewById(R.id.test_recycler_view).setOnClickListener(this);
 
         checkPermissions();
     }
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = null;
         if (id == R.id.test_activity) {
             intent = new Intent(this, TestActivity.class);
+        } else if (id == R.id.test_recycler_view) {
+            intent = new Intent(this, RecyclerViewActivity.class);
         } else {
             intent = new Intent(this, RendererActivity.class);
         }

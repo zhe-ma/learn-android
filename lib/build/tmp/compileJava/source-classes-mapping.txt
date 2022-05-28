@@ -1,0 +1,5 @@
+com/example/lib/School.java
+ com.example.lib.School
+ com.example.lib.School$Student
+com/example/lib/MyClass.java
+ com.example.lib.MyClass
