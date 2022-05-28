@@ -1,5 +1,6 @@
 package com.example.learnandroid.recyclerview;
 
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
 
     private List<Fruit> fruitList;
     private OnItemClickListener onItemClickListener;
+    private int selectedPosition = -1;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView fruitImage;
@@ -32,25 +34,37 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(v, getAdapterPosition());
-                        Log.d(TAG, "GetAdapterPosition: " + getAdapterPosition());
-                    }
+                    int position = getAdapterPosition();
+                    Log.d(TAG, "GetAdapterPosition: " + getAdapterPosition());
+                    FruitAdapter.this.selectItem(position, true);
                 }
             });
         }
     }
 
+    public FruitAdapter(List<Fruit> fruitList) {
+        this.fruitList = fruitList;
+    }
+
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(int position, boolean needScroll);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public FruitAdapter(List<Fruit> fruitList) {
-        this.fruitList = fruitList;
+    public void selectItem(int position, boolean needScroll) {
+        if (position < 0 || position >= this.fruitList.size() || selectedPosition == position) {
+            return;
+        }
+
+        selectedPosition = position;
+        if (onItemClickListener != null) {
+            onItemClickListener.onItemClick(position, needScroll);
+        }
+
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -65,6 +79,7 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
         Fruit fruit = fruitList.get(position);
         holder.fruitImage.setImageResource(fruit.getImageId());
         holder.fruitName.setText(fruit.getName());
+        holder.fruitName.setTypeface(Typeface.defaultFromStyle(selectedPosition == position ? Typeface.BOLD: Typeface.NORMAL));
     }
 
     @Override
