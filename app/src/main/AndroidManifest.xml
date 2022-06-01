@@ -20,6 +20,9 @@
             android:name=".PagActivity"
             android:exported="false" />
         <activity
+            android:name=".LottieActivity"
+            android:exported="false" />
+        <activity
             android:name=".RecyclerViewActivity"
             android:exported="false" />
         <activity

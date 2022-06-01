@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.test_activity).setOnClickListener(this);
         findViewById(R.id.test_recycler_view).setOnClickListener(this);
         findViewById(R.id.pag_view_activity).setOnClickListener(this);
+        findViewById(R.id.lottie_view_activity).setOnClickListener(this);
 
         checkPermissions();
     }
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(this, RecyclerViewActivity.class);
         } else if (id == R.id.pag_view_activity) {
             intent = new Intent(this, PagActivity.class);
+        } else if (id == R.id.lottie_view_activity) {
+            intent = new Intent(this, LottieActivity.class);
         } else {
             intent = new Intent(this, RendererActivity.class);
         }
