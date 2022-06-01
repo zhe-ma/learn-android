@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <org.libpag.PAGView
+        android:id="@+id/tab_selected_animation_pag"
+        android:layout_marginTop="6dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/tab_name"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textColor="#8CFFFFFF"
+        android:text="没吃饭回家吃去"
+        android:textSize="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/anchor_dot"
+        android:layout_marginTop="7dp"
+        android:layout_width="6dp"
+        android:layout_height="6dp" />
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:background="@color/teal_200"
+    android:layout_height="56dp">
+    <View
+        android:background="@color/black"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_width="match_parent"
+        android:layout_height="56dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="17dp"
+        android:text="文字心情日记"
+        android:textColor="@color/teal_200"
+        android:layout_marginTop="13dp"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:background="@color/white"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="8dp"
+        android:alpha="0.5"
+        android:layout_width="44dp"
+        android:layout_height="44dp" />
+
+</FrameLayout>
+
+</LinearLayout>
