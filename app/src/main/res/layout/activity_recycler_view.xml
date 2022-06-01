@@ -36,10 +36,9 @@
                     android:src="@drawable/circle_shape"/>
         </LinearLayout>
 
-
-
-
-<!--        android:layout_below="@+id/triangle_renderer_with_matrix"-->
-<!--        android:layout_marginTop="10dp"-->
+        <com.example.learnandroid.recyclerview.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/white"/>
 
 </RelativeLayout>
