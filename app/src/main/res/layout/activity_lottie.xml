@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_700"
-    tools:context=".LottieActivity">
+    tools:context=".activity.LottieActivity">
 
     <Button
         android:id="@+id/play_button"

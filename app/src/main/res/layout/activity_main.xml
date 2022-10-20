@@ -5,6 +5,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Button
+        android:id="@+id/camera1_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="250dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="Camera1"
+        android:textAllCaps="false"></Button>
+
+    <Button
         android:id="@+id/lottie_view_activity"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

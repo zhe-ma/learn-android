@@ -1,5 +1,6 @@
 package com.example.learnandroid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,12 +9,24 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import com.example.learnandroid.R;
+import com.example.learnandroid.activity.Camera1Activity;
+import com.example.learnandroid.activity.LottieActivity;
+import com.example.learnandroid.activity.PagActivity;
+import com.example.learnandroid.activity.RecyclerViewActivity;
+import com.example.learnandroid.activity.RendererActivity;
+import com.example.learnandroid.activity.TestActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -29,13 +42,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.test_recycler_view).setOnClickListener(this);
         findViewById(R.id.pag_view_activity).setOnClickListener(this);
         findViewById(R.id.lottie_view_activity).setOnClickListener(this);
+        findViewById(R.id.camera1_activity).setOnClickListener(this);
 
         checkPermissions();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d(TAG, "onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onRestoreInstanceState");
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
@@ -53,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(this, PagActivity.class);
         } else if (id == R.id.lottie_view_activity) {
             intent = new Intent(this, LottieActivity.class);
+        } else if (id == R.id.camera1_activity) {
+            intent = new Intent(this, Camera1Activity.class);
         } else {
             intent = new Intent(this, RendererActivity.class);
         }

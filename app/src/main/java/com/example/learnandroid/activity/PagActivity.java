@@ -1,4 +1,6 @@
-package com.example.learnandroid;
+package com.example.learnandroid.activity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,47 +8,47 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.RenderMode;
+import com.example.learnandroid.R;
 
 import org.libpag.PAGFile;
 import org.libpag.PAGView;
 
-/* Lottie的学习使用
-   网址：https://lottiefiles.com
+/* Pag的学习使用
+   网址：https://pag.io/
+   Demo：https://github.com/libpag/pag-android
  */
 
-public class LottieActivity extends AppCompatActivity {
-    private static final String TAG = "LottieActivity";
+public class PagActivity extends AppCompatActivity {
+    private static final String TAG = "PagActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lottie);
+        setContentView(R.layout.activity_pag);
 
-        LottieAnimationView lottieAnimationView = findViewById(R.id.lottie_view);
-
-        lottieAnimationView.setAnimation("love.json");
-        // 可选择软件，硬件，自动渲染。Pag只支持软件渲染
-        lottieAnimationView.setRenderMode(RenderMode.AUTOMATIC);
-        lottieAnimationView.setRepeatCount(1);
+        PAGView pagView = findViewById(R.id.refreshing_pag);
+        PAGFile pagFile = PAGFile.Load(getAssets(), "refreshing.pag");
+        pagView.setComposition(pagFile);
+        pagView.setRepeatCount(1);
+        Log.d(TAG,  pagFile.duration() + "");
 
         Button playButton = findViewById(R.id.play_button);
         playButton.setOnClickListener(v -> {
-            lottieAnimationView.playAnimation();
+            pagView.setVisibility(View.VISIBLE);
+            pagView.setProgress(0);
+            pagView.play();
         });
 
         Button stopButton = findViewById(R.id.stop_button);
-        stopButton.setOnClickListener(v -> lottieAnimationView.pauseAnimation());
+        stopButton.setOnClickListener(v -> pagView.stop());
 
         Button resumeButton = findViewById(R.id.resume_button);
-        resumeButton.setOnClickListener(v -> lottieAnimationView.resumeAnimation());
+        resumeButton.setOnClickListener(v -> pagView.play());
 
         Button closeButton = findViewById(R.id.close_button);
         closeButton.setOnClickListener(v -> {
-            lottieAnimationView.cancelAnimation();
+            pagView.stop();
+            pagView.setVisibility(View.GONE);
         });
 
         SeekBar seekBar = findViewById(R.id.seek_bar);
@@ -55,7 +57,8 @@ public class LottieActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                lottieAnimationView.setProgress((float) progress / 100);
+                pagView.stop();
+                pagView.setProgress((double) progress / 100);
             }
 
             @Override

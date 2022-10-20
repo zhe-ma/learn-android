@@ -1,4 +1,4 @@
-package com.example.learnandroid;
+package com.example.learnandroid.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.learnandroid.R;
 import com.example.learnandroid.renderer.Z05_CircleRenderer;
 import com.example.learnandroid.renderer.Z01_ClearRenderer;
 import com.example.learnandroid.renderer.Z07_CubeRenderer;

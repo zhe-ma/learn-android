@@ -17,16 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnAndroid">
         <activity
-            android:name=".PagActivity"
+            android:name=".activity.Camera1Activity"
             android:exported="false" />
         <activity
-            android:name=".LottieActivity"
+            android:name=".activity.PagActivity"
             android:exported="false" />
         <activity
-            android:name=".RecyclerViewActivity"
+            android:name=".activity.LottieActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
+            android:name=".activity.RecyclerViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TestActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -37,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RendererActivity" />
+        <activity android:name=".activity.RendererActivity" />
     </application>
 
 </manifest>

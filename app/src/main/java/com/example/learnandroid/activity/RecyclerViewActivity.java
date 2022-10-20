@@ -1,4 +1,4 @@
-package com.example.learnandroid;
+package com.example.learnandroid.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.example.learnandroid.R;
 import com.example.learnandroid.recyclerview.Fruit;
 import com.example.learnandroid.recyclerview.FruitAdapter;
 
