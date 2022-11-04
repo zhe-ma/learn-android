@@ -11,11 +11,15 @@
 
     <application
         android:allowBackup="true"
+        android:name=".MainApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnAndroid">
+        <activity
+            android:name=".activity.ShadowFrameLayoutActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.Camera1Activity"
             android:exported="false" />

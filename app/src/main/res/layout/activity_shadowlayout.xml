@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_700"
+    tools:context=".activity.ShadowFrameLayoutActivity">
+
+    <com.example.learnandroid.widget.ShadowFrameLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="50dp"
+        app:shadowBackgroundColor = "#F21A1A1A"
+        app:shadowLeftBreadth = "20dp"
+        app:shadowRightBreadth = "20dp"
+        app:shadowBottomBreadth = "20dp"
+        app:shadowBreadthColor = "#7f000000"
+        app:shadowBlur = "14dp"
+        app:shadowTopBreadth = "20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            />
+    </com.example.learnandroid.widget.ShadowFrameLayout>
+
+    <Button
+        android:id="@+id/shadowButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ShadowDialog"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="50dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

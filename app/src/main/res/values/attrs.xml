@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+    <declare-styleable name="shadowFrameLayout">
+        <attr name="shadowRadius" format="dimension" />
+        <attr name="shadowLeftBreadth" format="dimension" />
+        <attr name="shadowTopBreadth" format="dimension" />
+        <attr name="shadowRightBreadth" format="dimension" />
+        <attr name="shadowBottomBreadth" format="dimension" />
+        <attr name="shadowOffsetY" format="dimension" />
+        <attr name="shadowOffsetX" format="dimension" />
+        <attr name="shadowBackgroundColor" format="color" />
+        <attr name="shadowBreadthColor" format="color" />
+        <attr name="shadowBlur" format="dimension" />
+    </declare-styleable>
+</resources>

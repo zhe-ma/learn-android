@@ -7,6 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="71dp"
+        android:layout_height="262dp"
+        android:layout_gravity="center"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="#F21A1A1A"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"/>
+
     <TextView
         android:id="@+id/tab_name"
         android:layout_marginTop="13dp"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.learnandroid.widget.ShadowFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shadowBackgroundColor="#AFFAFFFF"
+    app:shadowLeftBreadth="20dp"
+    app:shadowRightBreadth="20dp"
+    app:shadowBottomBreadth="20dp"
+    app:shadowTopBreadth="20dp"
+    app:shadowBreadthColor="#7f000000"
+    app:shadowBlur="20dp">
+
+</com.example.learnandroid.widget.ShadowFrameLayout>

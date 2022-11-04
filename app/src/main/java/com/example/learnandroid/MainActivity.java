@@ -18,6 +18,7 @@ import com.example.learnandroid.activity.LottieActivity;
 import com.example.learnandroid.activity.PagActivity;
 import com.example.learnandroid.activity.RecyclerViewActivity;
 import com.example.learnandroid.activity.RendererActivity;
+import com.example.learnandroid.activity.ShadowFrameLayoutActivity;
 import com.example.learnandroid.activity.TestActivity;
 
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.pag_view_activity).setOnClickListener(this);
         findViewById(R.id.lottie_view_activity).setOnClickListener(this);
         findViewById(R.id.camera1_activity).setOnClickListener(this);
+        findViewById(R.id.shadowlayout_activity).setOnClickListener(this);
 
         checkPermissions();
     }
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(this, LottieActivity.class);
         } else if (id == R.id.camera1_activity) {
             intent = new Intent(this, Camera1Activity.class);
+        } else if (id == R.id.shadowlayout_activity) {
+            intent = new Intent(this, ShadowFrameLayoutActivity.class);
         } else {
             intent = new Intent(this, RendererActivity.class);
         }
