@@ -40,36 +40,36 @@ class ShadowFrameLayout @JvmOverloads constructor(
     private var shadowBlur: Int
 
     init {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.shadowFrameLayout)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShadowFrameLayout)
         shadowRadius = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowRadius, DEFAULT_VALUE_SHADOW_RADIUS
+            R.styleable.ShadowFrameLayout_shadowRadius, DEFAULT_VALUE_SHADOW_RADIUS
         )
         shadowLeftBreadth = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowLeftBreadth, DEFAULT_VALUE_SHADOW_LEFT_BREADTH
+            R.styleable.ShadowFrameLayout_shadowLeftBreadth, DEFAULT_VALUE_SHADOW_LEFT_BREADTH
         )
         shadowTopBreadth = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowTopBreadth, DEFAULT_VALUE_SHADOW_TOP_BREADTH
+            R.styleable.ShadowFrameLayout_shadowTopBreadth, DEFAULT_VALUE_SHADOW_TOP_BREADTH
         )
         shadowRightBreadth = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowRightBreadth, DEFAULT_VALUE_SHADOW_RIGHT_BREADTH
+            R.styleable.ShadowFrameLayout_shadowRightBreadth, DEFAULT_VALUE_SHADOW_RIGHT_BREADTH
         )
         shadowBottomBreadth = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowBottomBreadth, DEFAULT_VALUE_SHADOW_BOTTOM_BREADTH
+            R.styleable.ShadowFrameLayout_shadowBottomBreadth, DEFAULT_VALUE_SHADOW_BOTTOM_BREADTH
         )
         shadowOffsetX = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowOffsetX, DEFAULT_VALUE_SHADOW_OFFSET_X
+            R.styleable.ShadowFrameLayout_shadowOffsetX, DEFAULT_VALUE_SHADOW_OFFSET_X
         )
         shadowOffsetY = typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowOffsetY, DEFAULT_VALUE_SHADOW_OFFSET_Y
+            R.styleable.ShadowFrameLayout_shadowOffsetY, DEFAULT_VALUE_SHADOW_OFFSET_Y
         )
         shadowBackgroundColor = typedArray.getColor(
-            R.styleable.shadowFrameLayout_shadowBackgroundColor, DEFAULT_VALUE_SHADOW_BACKGROUND_COLOR
+            R.styleable.ShadowFrameLayout_shadowBackgroundColor, DEFAULT_VALUE_SHADOW_BACKGROUND_COLOR
         )
         shadowBreadthColor = typedArray.getColor(
-            R.styleable.shadowFrameLayout_shadowBreadthColor, DEFAULT_VALUE_SHADOW_BREADTH_COLOR
+            R.styleable.ShadowFrameLayout_shadowBreadthColor, DEFAULT_VALUE_SHADOW_BREADTH_COLOR
         )
         shadowBlur= typedArray.getDimensionPixelSize(
-            R.styleable.shadowFrameLayout_shadowBlur, DEFAULT_VALUE_SHADOW_BLUR
+            R.styleable.ShadowFrameLayout_shadowBlur, DEFAULT_VALUE_SHADOW_BLUR
         )
         typedArray.recycle()
 
