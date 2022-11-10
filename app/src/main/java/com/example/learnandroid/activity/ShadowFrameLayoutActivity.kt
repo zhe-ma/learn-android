@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.SeekBar
+import android.widget.TextView
 import com.example.learnandroid.R
 import com.example.learnandroid.ShadowDialog
+import com.example.learnandroid.utils.vibrate
 
 class ShadowFrameLayoutActivity : AppCompatActivity() {
     companion object {
@@ -24,17 +26,21 @@ class ShadowFrameLayoutActivity : AppCompatActivity() {
             dialog.show()
         }
 
-
-
+        val seekBarNumber = findViewById<TextView>(R.id.seekBarNumber)
         val seekBar = findViewById<SeekBar>(R.id.shadowSeekbar)
 
-
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            var canVibrate = true
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (progress == 50) {
-                    seekBar?.progress = 70
+                seekBarNumber.text = "$progress"
+                if (canVibrate && progress == 100) {
+                    vibrate(100)
+                    canVibrate = false
+                } else if (progress in 95..105) {  // 95-105之间吸附到100
+                    seekBar?.progress = 100
+                } else {
+                    canVibrate = true
                 }
-
                 Log.d(TAG, progress.toString())
             }
 

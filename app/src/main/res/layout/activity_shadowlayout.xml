@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A1A"
+    android:background="@color/teal_200"
     tools:context=".activity.ShadowFrameLayoutActivity">
 
     <com.example.learnandroid.widget.ShadowFrameLayout
@@ -19,12 +19,15 @@
         app:shadowLeftBreadth = "20dp"
         app:shadowRightBreadth = "20dp"
         app:shadowBottomBreadth = "20dp"
+        app:shadowRadius="20dp"
         app:shadowBreadthColor = "#7f000000"
-        app:shadowBlur = "14dp"
+        app:shadowBlur = "20dp"
         app:shadowTopBreadth = "20dp">
         <TextView
+            android:id="@+id/seekBarNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/teal_200"
             android:text="Hello"
             android:textSize="30dp"
             android:layout_gravity="center"
@@ -50,7 +53,7 @@
         android:progressDrawable="@drawable/seekbar_bg"
         android:thumb="@drawable/seekbar_thumb"
         android:layout_height="wrap_content"/>
-    
+
     <Button
         android:id="@+id/shadowButton"
         android:layout_width="wrap_content"
