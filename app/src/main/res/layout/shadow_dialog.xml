@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.learnandroid.widget.ShadowFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:shadowBackgroundColor="#AFFAFFFF"
-    app:shadowLeftBreadth="20dp"
-    app:shadowRightBreadth="20dp"
-    app:shadowBottomBreadth="20dp"
-    app:shadowTopBreadth="20dp"
-    app:shadowBreadthColor="#7f000000"
-    app:shadowBlur="20dp">
+    android:layout_width="76dp"
+    android:layout_height="254dp"
+    app:shadowBlur="8dp"
+    app:shadowTopBreadth="8dp"
+    app:shadowBottomBreadth="8dp"
+    app:shadowLeftBreadth="8dp"
+    app:shadowRightBreadth="8dp"
+    app:shadowRadius="8dp"
+    app:shadowBackgroundColor="#F21A1A1A"
+    app:shadowBreadthColor="#7F000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
+            android:layout_marginTop="20dp">
+
+            <SeekBar
+                android:id="@+id/volume_seek_bar"
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:duplicateParentState="true"
+                android:max="300"
+                android:maxHeight="6dp"
+                android:min="0"
+                android:minHeight="6dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:progressDrawable="@drawable/seekbar_bg"
+                android:rotation="-90"
+                android:splitTrack="false"
+                android:thumb="@drawable/seekbar_thumb"
+                android:thumbOffset="4dp" />
+
+        </FrameLayout>
+        <TextView
+            android:id="@+id/volume_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="300"
+            android:textColor="#FFFFFFFF"
+            android:textSize="12dp" />
+
+    </LinearLayout>
 
 </com.example.learnandroid.widget.ShadowFrameLayout>

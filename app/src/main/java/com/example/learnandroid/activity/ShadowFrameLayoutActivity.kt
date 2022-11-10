@@ -31,6 +31,10 @@ class ShadowFrameLayoutActivity : AppCompatActivity() {
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (progress == 50) {
+                    seekBar?.progress = 70
+                }
+
                 Log.d(TAG, progress.toString())
             }
 
