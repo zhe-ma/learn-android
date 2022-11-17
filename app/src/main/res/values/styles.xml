@@ -8,4 +8,26 @@
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+
+
+    <!--实现BottomSheetDialog圆角效果 且无背景阴影-->
+    <style name="BottomSheetDialogBg" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:topLeftRadius">20dp</item>
+        <item name="android:topRightRadius">20dp</item>
+    </style>
+<!--    <style name="AppBottomSheet" parent="Theme.MaterialComponents.Light.BottomSheetDialog">-->
+<!--        <item name="bottomSheetStyle">@style/AppBottomSheetStyle</item>-->
+<!--    </style>-->
+
+<!--    <style name="AppBottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">-->
+<!--        <item name="backgroundTint">@color/transparent</item>-->
+<!--    </style>-->
+
 </resources>

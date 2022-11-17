@@ -66,4 +66,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
+
+    <Button
+        android:id="@+id/BottomSheetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BottomSheetDialog"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="50dp"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toRightOf="@id/shadowButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

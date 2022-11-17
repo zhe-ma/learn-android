@@ -55,6 +55,7 @@ public class TabLayout extends RecyclerView {
         setLayoutManager(linearLayoutManager);
         // 设置Item不绑定到边缘
         setClipToPadding(false);
+        addItemDecoration(new FruitDecoration());
 
         // 获取RecyclerView的宽度
         ViewTreeObserver viewTreeObserver = getViewTreeObserver();
