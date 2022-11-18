@@ -1,26 +1,29 @@
 package com.example.learnandroid.activity
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.learnandroid.R
 import com.example.learnandroid.ShadowDialog
 import com.example.learnandroid.utils.vibrate
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlin.math.roundToInt
+
 
 class ShadowFrameLayoutActivity : AppCompatActivity() {
     companion object {
@@ -37,14 +40,6 @@ class ShadowFrameLayoutActivity : AppCompatActivity() {
             val dialog = ShadowDialog(this)
             dialog.show()
         }
-
-
-        val button2 = findViewById<Button>(R.id.BottomSheetButton)
-        button2.setOnClickListener {
-            val dialog = BlankBottomSheetDialogFragment()
-            dialog.show(supportFragmentManager, "BlankBottomSheetDialogFragment")
-        }
-
 
         val seekBarNumber = findViewById<TextView>(R.id.seekBarNumber)
         val seekBar = findViewById<SeekBar>(R.id.shadowSeekbar)
@@ -72,16 +67,47 @@ class ShadowFrameLayoutActivity : AppCompatActivity() {
 
         })
 
-        seekBar.progress = 105
 
+        val button2 = findViewById<Button>(R.id.BottomSheetButton)
+        button2.setOnClickListener {
+            val dialog = BlankBottomSheetDialogFragment()
+            dialog.show(supportFragmentManager, "BlankBottomSheetDialogFragment")
+        }
+    }
+}
+
+
+class CategoryAdapter(val categories: List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return object : RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.fruit_category_item, parent, false)
+        ) {}
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val text = holder.itemView.findViewById<TextView>(R.id.fruit_categoty)
+        text.text = categories[position]
+    }
+
+    override fun getItemCount(): Int {
+        return categories.size
+    }
 }
 
 class BlankBottomSheetDialogFragment : BottomSheetDialogFragment() {
+    private var categoryRv: RecyclerView? = null
+    private var categoryLayoutManager: LinearLayoutManager? = null
+    private var categoryAdapter: CategoryAdapter? = null
+    private var contentRv: RecyclerView? = null
+    private var contentLayoutManager: GridLayoutManager? = null
+
+    private var categories = mutableListOf<String>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return BottomSheetDialog(context!!)
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED // 全屏展开
+        dialog.behavior.skipCollapsed = true // 设置不折叠
+        return dialog
     }
 
     override fun onCreateView(
@@ -89,9 +115,9 @@ class BlankBottomSheetDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-        return inflater.inflate(R.layout.activity_bottom_sheet_layout, container, false)
+        val rootView = inflater.inflate(R.layout.activity_bottom_sheet_layout, container, false)
+        initView(rootView)
+        return rootView
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,12 +127,47 @@ class BlankBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        if (dialog is BottomSheetDialog) {
-//            (dialog as BottomSheetDialog).behavior.peekHeight = 1280
-            (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//            dialog?.window?.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, 1280) //最大高度也是
-//            dialog?.window?.setGravity(Gravity.BOTTOM)
+        view?.layoutParams?.height = (0.76 * resources.displayMetrics.heightPixels.toFloat()).roundToInt()
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        super.show(manager, tag)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+    }
+
+    private fun initView(rootView: View) {
+        initData()
+
+        categoryRv = rootView.findViewById<RecyclerView?>(R.id.categoryRv).apply {
+            categoryLayoutManager = LinearLayoutManager(this@BlankBottomSheetDialogFragment.context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = categoryLayoutManager
+            categoryAdapter = CategoryAdapter(categories)
+            adapter = categoryAdapter
+        }
+
+        contentRv = rootView.findViewById<RecyclerView?>(R.id.contentRv).apply {
+            contentLayoutManager = GridLayoutManager(context, 12) // 等分成12份
+            layoutManager = contentLayoutManager
         }
     }
 
+    private fun initData() {
+        categories = mutableListOf("AAFruit0", "AAFruit2", "AAFruit3", "AAFruit4", "AAFruit5", "AAFruit6")
+
+
+    }
 }
+
+
+/**
+ * 水果数据类
+ */
+data class Fruit(
+    var type: String,
+    var imageId: Int,
+    var name: String,
+    var category: String
+)
