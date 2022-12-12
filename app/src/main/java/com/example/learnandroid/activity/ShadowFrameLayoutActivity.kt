@@ -2,7 +2,15 @@ package com.example.learnandroid.activity
 
 import android.app.Dialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,9 +28,9 @@ import com.example.learnandroid.R
 import com.example.learnandroid.ShadowDialog
 import com.example.learnandroid.utils.vibrate
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.util.*
 import kotlin.math.roundToInt
 
 
@@ -68,6 +77,28 @@ class ShadowFrameLayoutActivity : AppCompatActivity() {
         })
 
 
+        val linkTextView = findViewById<TextView>(R.id.linkTv)
+        linkTextView.highlightColor = Color.TRANSPARENT
+
+        val str1 = "Hello"
+        val str2 = "World"
+        val spannableString = SpannableString(str1 + str2)
+        spannableString.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                Toast.makeText(baseContext, "Hello", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.clearShadowLayer()
+            }
+        }, str1.length, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(Color.RED), str1.length, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        linkTextView.text = spannableString
+        linkTextView.movementMethod = LinkMovementMethod.getInstance();
+
+
         val button2 = findViewById<Button>(R.id.BottomSheetButton)
         button2.setOnClickListener {
             val dialog = BlankBottomSheetDialogFragment()
@@ -94,12 +125,35 @@ class CategoryAdapter(val categories: List<String>) : RecyclerView.Adapter<Recyc
     }
 }
 
+class ContentAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return object : RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.fruit_content_item, parent, false)
+        ) {}
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val view = holder.itemView.findViewById<View>(R.id.recView)
+        val random = Random()
+        val r: Int = random.nextInt(256)
+        val g: Int = random.nextInt(256)
+        val b: Int = random.nextInt(256)
+        view.setBackgroundColor(Color.rgb(r, g, b))
+    }
+
+    override fun getItemCount(): Int {
+//        return categories.size
+        return 50
+    }
+}
+
 class BlankBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private var categoryRv: RecyclerView? = null
     private var categoryLayoutManager: LinearLayoutManager? = null
     private var categoryAdapter: CategoryAdapter? = null
     private var contentRv: RecyclerView? = null
     private var contentLayoutManager: GridLayoutManager? = null
+    private var contentAdapter: ContentAdapter? = null
 
     private var categories = mutableListOf<String>()
 
@@ -148,9 +202,17 @@ class BlankBottomSheetDialogFragment : BottomSheetDialogFragment() {
             adapter = categoryAdapter
         }
 
+        categoryRv?.isNestedScrollingEnabled = false
+
         contentRv = rootView.findViewById<RecyclerView?>(R.id.contentRv).apply {
-            contentLayoutManager = GridLayoutManager(context, 12) // 等分成12份
+//            contentLayoutManager = GridLayoutManager(context, 12) // 等分成12份
+            contentLayoutManager = GridLayoutManager(context, 4) // 等分成12份
             layoutManager = contentLayoutManager
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+
+            contentAdapter = ContentAdapter()
+            adapter = contentAdapter
         }
     }
 

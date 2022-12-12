@@ -54,6 +54,14 @@
         android:thumb="@drawable/seekbar_thumb"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/linkTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shadowSeekbar"/>
+
     <Button
         android:id="@+id/shadowButton"
         android:layout_width="wrap_content"
