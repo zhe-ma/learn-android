@@ -1,20 +1,49 @@
 package com.example.learnandroid
 
 import android.Manifest
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Typeface
 import android.util.Log
+import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learnandroid.activity.*
+import com.example.learnandroid.utils.dp
+import java.util.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"
+        private val BUTTON_DATA = mutableListOf<Pair<String, Class<*>>>(
+            BUTTON_NAME_TEST to TestActivity::class.java,
+            BUTTON_NAME_CLEAR_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_TRIANGLE_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_MATRIX_TRIANGLE_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_COLOR_TRIANGLE_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_CIRCLE_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_POLYGON_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_CUBE_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_SQUARE_TEXTURE_RENDERER to RendererActivity::class.java,
+            BUTTON_NAME_RECYCLER_VIEW to RecyclerViewActivity::class.java,
+            BUTTON_NAME_PAG_VIEW to PagActivity::class.java,
+            BUTTON_NAME_LOTTIE_VIEW to LottieActivity::class.java,
+            BUTTON_NAME_CAMERA1 to Camera1Activity::class.java,
+            BUTTON_NAME_SHADOW_FRAME_LAYOUT to ShadowFrameLayoutActivity::class.java,
+            BUTTON_NAME_WEBVIEW to WebviewActivity::class.java,
+        )
     }
 
     private val recyclerView: RecyclerView? by lazy { findViewById(R.id.main_activity_rv) }
@@ -22,23 +51,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-        setContentView(R.layout.activity_main1)
-        findViewById<View>(R.id.clear_renderer).setOnClickListener(this)
-        findViewById<View>(R.id.triangle_renderer).setOnClickListener(this)
-        findViewById<View>(R.id.triangle_renderer_with_matrix).setOnClickListener(this)
-        findViewById<View>(R.id.triangle_renderer_with_color).setOnClickListener(this)
-        findViewById<View>(R.id.circle_renderer).setOnClickListener(this)
-        findViewById<View>(R.id.polygon_renderer).setOnClickListener(this)
-        findViewById<View>(R.id.cube_renderer).setOnClickListener(this)
-        findViewById<View>(R.id.square_texture_renderer).setOnClickListener(this)
-        findViewById<View>(R.id.test_activity).setOnClickListener(this)
-        findViewById<View>(R.id.test_recycler_view).setOnClickListener(this)
-        findViewById<View>(R.id.pag_view_activity).setOnClickListener(this)
-        findViewById<View>(R.id.lottie_view_activity).setOnClickListener(this)
-        findViewById<View>(R.id.camera1_activity).setOnClickListener(this)
-        findViewById<View>(R.id.shadowlayout_activity).setOnClickListener(this)
-        findViewById<View>(R.id.webview_activity).setOnClickListener(this)
+        setContentView(R.layout.activity_main)
+        recyclerView?.adapter = ButtonAdapter()
+        recyclerView?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
         checkPermissions()
     }
 
@@ -82,32 +98,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onRestoreInstanceState(savedInstanceState)
     }
 
-    override fun onClick(view: View) {
-        startActivityByButtonId(view.id)
-    }
-
-    private fun startActivityByButtonId(id: Int) {
-        var intent = if (id == R.id.test_activity) {
-            Intent(this, TestActivity::class.java)
-        } else if (id == R.id.test_recycler_view) {
-            Intent(this, RecyclerViewActivity::class.java)
-        } else if (id == R.id.pag_view_activity) {
-            Intent(this, PagActivity::class.java)
-        } else if (id == R.id.lottie_view_activity) {
-            Intent(this, LottieActivity::class.java)
-        } else if (id == R.id.camera1_activity) {
-            Intent(this, Camera1Activity::class.java)
-        } else if (id == R.id.shadowlayout_activity) {
-            Intent(this, ShadowFrameLayoutActivity::class.java)
-        } else if (id == R.id.webview_activity) {
-            Intent(this, WebviewActivity::class.java)
-        } else {
-            Intent(this, RendererActivity::class.java)
-        }
-        intent.putExtra("buttonId", id)
-        startActivity(intent)
-    }
-
     private fun checkPermissions() {
         val permissions = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -125,4 +115,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    class ButtonAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            return object : RecyclerView.ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.activity_main_rv_item, parent, false)
+            ) {}
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            val buttonItem = BUTTON_DATA[position]
+            val button = holder.itemView.findViewById<TextView>(R.id.main_activity_rv_item_text)
+            button.text = buttonItem.first
+            button.setOnClickListener {
+                val intent = Intent(holder.itemView.context, buttonItem.second)
+                intent.putExtra("buttonName", buttonItem.first)
+                startActivity(holder.itemView.context, intent, null)
+            }
+
+            button.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    button.setTextColor(Color.parseColor("#6F2468AC"))
+                    button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25f)
+                } else if (event.action == MotionEvent.ACTION_UP) {
+                    button.setTextColor(Color.parseColor("#6F1A1A1A"))
+                    button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22f)
+                }
+                false
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return BUTTON_DATA.size
+        }
+    }
 }

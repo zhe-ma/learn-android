@@ -6,7 +6,8 @@
     <TextView
         android:id="@+id/main_activity_rv_item_text"
         android:text="HelloWorld"
-        android:textSize="20dp"
+        android:textSize="22dp"
+        android:textColor="#6F1a1a1a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
