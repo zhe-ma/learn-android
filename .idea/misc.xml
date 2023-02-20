@@ -13,10 +13,13 @@
         <entry key="app/src/main/res/layout/activity_camera1.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/activity_lottie.xml" value="0.2441123188405797" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main1.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main_rv_item.xml" value="0.5049818840579711" />
         <entry key="app/src/main/res/layout/activity_pag.xml" value="0.2441123188405797" />
         <entry key="app/src/main/res/layout/activity_recycler_view.xml" value="0.2797953287760417" />
         <entry key="app/src/main/res/layout/activity_shadowlayout.xml" value="0.5049818840579711" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.24230072463768115" />
+        <entry key="app/src/main/res/layout/activity_webview.xml" value="0.5049818840579711" />
         <entry key="app/src/main/res/layout/circle_shape.xml" value="0.2441123188405797" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.24864130434782608" />
         <entry key="app/src/main/res/layout/fruit_category_item.xml" value="0.5049818840579711" />

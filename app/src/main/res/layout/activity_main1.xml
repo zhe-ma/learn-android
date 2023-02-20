@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF8DC"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/webview_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="-5dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="WebView"
+        android:textAllCaps="false"></Button>
+
+    <Button
+        android:id="@+id/shadowlayout_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="305dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="ShadowFrameLayout"
+        android:textAllCaps="false"></Button>
+
+    <Button
+        android:id="@+id/camera1_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="250dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="Camera1"
+        android:textAllCaps="false"></Button>
+
+    <Button
+        android:id="@+id/lottie_view_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="188dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="LottieView"
+        android:textAllCaps="false"></Button>
+
+    <Button
+        android:id="@+id/pag_view_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="127dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="PagView"
+        android:textAllCaps="false"></Button>
+
+    <Button
+        android:id="@+id/test_recycler_view"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="68dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="RecyclerView"
+        android:textAllCaps="false"></Button>
+
+    <Button
+        android:id="@+id/clear_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="背景色01">
+    </Button>
+
+    <Button
+        android:id="@+id/test_activity"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/clear_renderer"
+        android:text="测试"></Button>
+
+    <Button
+        android:id="@+id/triangle_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="三角形02"
+        android:layout_below="@+id/clear_renderer"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp">
+    </Button>
+
+    <Button
+        android:id="@+id/triangle_renderer_with_matrix"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/triangle_renderer"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="等腰三角形03">
+    </Button>
+
+    <Button
+        android:id="@+id/triangle_renderer_with_color"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/triangle_renderer_with_matrix"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="彩色三角形和矩形04">
+    </Button>
+
+    <Button
+        android:id="@+id/circle_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/triangle_renderer_with_color"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="圆形05">
+    </Button>
+
+    <Button
+        android:id="@+id/polygon_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circle_renderer"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="索引法多边形06">
+    </Button>
+
+    <Button
+        android:id="@+id/cube_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/polygon_renderer"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="立方体07">
+    </Button>
+
+    <Button
+        android:id="@+id/square_texture_renderer"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cube_renderer"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="矩形纹理贴图08">
+    </Button>
+
+</RelativeLayout>
