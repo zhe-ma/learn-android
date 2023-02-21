@@ -64,6 +64,17 @@ class WebviewActivity : AppCompatActivity() {
         }
 
         // https://juejin.cn/post/6844904153605505032
+        // https://ost.51cto.com/posts/3090
+
+        // android 调用 js 代码：
+        // 1. WebView#loadUrl("javascript:func('" + arg + "')")
+        // 2. WebView#evaluateJavascript(String script, @Nullable ValueCallback<String> resultCallback)
+
+        // js 调用 android 代码：
+        // 1. 通过 WebView#addJavascriptInterface(Object object, String name) 进行对象映射
+        // 2. 通过 WebViewClient#shouldOverrideUrlLoading() 来拦截Url调用代码
+        // 3.通过 WebChromeClient 的 onJsAlert()、onJsConfirm()、 onJsPrompt() 拦截 js 中的对话框 alert() / confirm() / prompt()
+
         webview.webChromeClient = object : WebChromeClient() {
             override fun onJsPrompt(
                 view: WebView?,
