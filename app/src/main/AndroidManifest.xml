@@ -18,6 +18,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.LearnAndroid">
         <activity
             android:name=".activity.WebviewActivity"
@@ -39,6 +40,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CanvasActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
