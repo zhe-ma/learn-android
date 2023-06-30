@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.example.learnandroid.utils.FileUtil
 import com.example.learnandroid.utils.dp
+import kotlin.math.abs
 
 class PaintView @JvmOverloads constructor(
     context: Context,
@@ -17,10 +18,21 @@ class PaintView @JvmOverloads constructor(
         if (canvas == null) {
             return
         }
-        testBitmapCanvas()
-        drawBg(canvas)
-        drawPaint(canvas)
-        drawBitmap(canvas)
+//        testBitmapCanvas()
+//        drawBg(canvas)
+//        drawPaint(canvas)
+//        drawBitmap(canvas)
+//        testBitmapCanvas2(canvas)
+        drawText(canvas)
+    }
+
+    private fun drawText(canvas: Canvas) {
+        val paint = Paint()
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.FILL
+        paint.strokeWidth = 3.dp.toFloat()
+        paint.textSize = 100.dp.toFloat()
+        canvas.drawText("测试abcdefg测试abcdefg测试abcdefg测试abcdefg", 0f, 100f, paint)
     }
 
     private fun drawBitmap(canvas: Canvas) {
@@ -80,10 +92,43 @@ class PaintView @JvmOverloads constructor(
 //        val bitmap = Bitmap.createBitmap(900, 900, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         val paint = Paint()
-        paint.color = Color.BLACK
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 10.dp.toFloat()
+//        paint.color = Color.BLACK
+//        paint.style = Paint.Style.STROKE
+//        paint.strokeWidth = 10.dp.toFloat()
         canvas.drawRect(10f, 10f, 400f, 400f, paint)
         canvas.drawPoints(floatArrayOf(10f, 20f, 30f, 60f, 60f, 120f), paint)
+    }
+
+    private fun testBitmapCanvas2(viewCanvas: Canvas) {
+        val dstbitmap = FileUtil.loadBitmapFromAssets(context, "mosaic_test.png")
+
+        val matrix = Matrix().apply {
+            setValues(floatArrayOf(
+                0.71325046f, -0.70090926f, 0.0f,
+                0.70090926f, 0.71325046f, 0.0f,
+                0.0f, 0.0f, 1.0f
+            ))
+        }
+
+        val rectF11 = Rect(108, 663, 276, 831)
+
+        val bitmap = Bitmap.createBitmap(abs(rectF11.left - rectF11.right), abs(rectF11.top - rectF11.bottom), dstbitmap.config)
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+//        paint.color = Color.BLACK
+//        paint.style = Paint.Style.STROKE
+//        paint.strokeWidth = 10.dp.toFloat()
+
+        matrix.postTranslate(-rectF11.left.toFloat(), -rectF11.top.toFloat())
+        val rectF12 = Rect(0, 0, 158, 158)
+//        canvas.rectc
+//        canvas.drawBitmap(bitmap, rectF11, rectF12, paint)
+
+//        canvas.clipRect(rectF12)
+        canvas.drawBitmap(dstbitmap, matrix, paint)
+        canvas.clipRect(0,0,100,20)
+
+        FileUtil.saveBitmap(bitmap, "/sdcard/test2/2.png", Bitmap.CompressFormat.PNG, 100)
+        viewCanvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 }
