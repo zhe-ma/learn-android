@@ -8,12 +8,10 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Typeface
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -21,7 +19,6 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learnandroid.activity.*
-import com.example.learnandroid.utils.dp
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             BUTTON_NAME_RECYCLER_VIEW to RecyclerViewActivity::class.java,
             BUTTON_NAME_PAG_VIEW to PagActivity::class.java,
             BUTTON_NAME_LOTTIE_VIEW to LottieActivity::class.java,
-            BUTTON_NAME_CAMERA1 to Camera1Activity::class.java,
+            BUTTON_NAME_CAMERA1 to JniDemoActivity::class.java,
             BUTTON_NAME_SHADOW_FRAME_LAYOUT to ShadowFrameLayoutActivity::class.java,
             BUTTON_NAME_WEBVIEW to WebviewActivity::class.java,
             BUTTON_CANVAS to CanvasActivity::class.java

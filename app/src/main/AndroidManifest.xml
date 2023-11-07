@@ -27,7 +27,7 @@
             android:name=".activity.ShadowFrameLayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.Camera1Activity"
+            android:name=".activity.JniDemoActivity"
             android:exported="false" />
         <activity
             android:name=".activity.PagActivity"
