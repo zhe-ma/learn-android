@@ -13,6 +13,7 @@ public class SpdlogHelper {
     static {
         try {
             System.loadLibrary("learnandroid");
+            nativeInit();
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }

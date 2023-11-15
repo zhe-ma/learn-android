@@ -5,11 +5,15 @@
 #ifndef LEARNANDROID_DEFS_H_
 #define LEARNANDROID_DEFS_H_
 
+#include <string>
+#include "jni.h"
 #include "android/log.h"
 
 namespace jni_demo {
 
-const char* TAG = "jni_demo";
+extern const char* TAG;
+
+std::string ConvertJStringToStdString(JNIEnv* env, jstring jstr);
 
 }  // jni_demo
 

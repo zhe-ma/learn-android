@@ -18,9 +18,21 @@
 
 #include <jni.h>
 #include <string>
+#include <memory>
 #include "jni_demo/defs.h"
+#include "jni_demo/jni_class_wrapper.h"
+#include "jni_demo/jni_demo.h"
+#include "jni_demo/jni_demo_config.h"
 #include "spdlog/sinks/android_sink.h"
 #include "spdlog/spdlog.h"
+
+namespace jni_demo {
+static jfieldID g_jni_demo_native_context_filed_id = nullptr;
+}  // jni_demo
+
+/**
+ * SPDLOG 测试
+ */
 
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -37,10 +49,170 @@ Java_com_example_learnandroid_jnidemo_SpdlogHelper_getLoggerTag(JNIEnv *env, jcl
   return env->NewStringUTF(jni_demo::TAG);
 }
 
+/**
+ * 使用Java包装Jni
+ */
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_learnandroid_jnidemo_SpdlogHelper_nativeInit(JNIEnv *env, jclass clazz) {
   auto android_logger = spdlog::android_logger_mt("learnandroid", jni_demo::TAG);
   spdlog::set_default_logger(android_logger);
   SPDLOG_WARN("Init Spdlog");
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemo_nativeFinalize(JNIEnv *env, jobject thiz) {
+  // https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html
+  // Get<type>Field Routines
+  // This family of accessor routines returns the value of an instance (nonstatic) field of an object.
+  // The field to access is specified by a field ID obtained by calling GetFieldID().
+  //The following table describes the Get<type>Field routine name and result type.
+  // You should replace type in Get<type>Field with the Java type of the field,
+  // or use one of the actual routine names from the table,
+  // and replace NativeType with the corresponding native type for that routine.
+  // 获取对象的nativeContext值转为jni对象进行析构，然后将kotlin中的nativeContext转为0
+  jni_demo::JniDemo* jni_demo = reinterpret_cast<jni_demo::JniDemo *>(
+          env->GetLongField(thiz,jni_demo::g_jni_demo_native_context_filed_id));
+  delete jni_demo;
+  env->SetLongField(thiz, jni_demo::g_jni_demo_native_context_filed_id, 0l);
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemo_getConfig(JNIEnv *env, jobject thiz) {
+  jni_demo::JniDemo* jni_demo = reinterpret_cast<jni_demo::JniDemo *>(
+          env->GetLongField(thiz,jni_demo::g_jni_demo_native_context_filed_id));
+  if (jni_demo == nullptr) {
+    return nullptr;
+  }
+
+  static jni_demo::JniClassWrapper<jclass> s_config_class(env, env->FindClass("com/example/learnandroid/jnidemo/JniDemoConfig"));
+  // 获取构造函数
+  static jmethodID s_config_constructor = env->GetMethodID(s_config_class.get(), "<init>", "()V");
+  static jfieldID s_config_name = env->GetFieldID(s_config_class.get(), "name", "Ljava/lang/String;");
+  static jfieldID s_config_type = env->GetFieldID(s_config_class.get(), "type", "I");
+
+  // 创建一个java对象
+  // Constructs a new Java object. The method ID indicates which constructor method to invoke.
+  // This ID must be obtained by calling GetMethodID() with <init> as the method name and void (V) as the return type.
+  jobject object = env->NewObject(s_config_class.get(), s_config_constructor);
+  env->SetIntField(object, s_config_type, jni_demo->config().type);
+  env->SetObjectField(object, s_config_name, env->NewStringUTF(jni_demo->config().name.c_str()));
+
+  return object;
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemo_setName(JNIEnv *env, jobject thiz, jstring name) {
+  jni_demo::JniDemo* jni_demo = reinterpret_cast<jni_demo::JniDemo *>(
+          env->GetLongField(thiz,jni_demo::g_jni_demo_native_context_filed_id));
+  if (jni_demo != nullptr) {
+    jni_demo->SetName(jni_demo::ConvertJStringToStdString(env, name));
+  }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemo_newInstance(JNIEnv *env, jobject thiz, jobject config) {
+  static jni_demo::JniClassWrapper<jclass> s_config_class(env, env->FindClass("com/example/learnandroid/jnidemo/JniDemoConfig"));
+  static jfieldID s_config_name = env->GetFieldID(s_config_class.get(), "name", "Ljava/lang/String;");
+  static jfieldID s_config_type = env->GetFieldID(s_config_class.get(), "type", "I");
+
+  // 获取对象成员变量的值
+  jstring name = static_cast<jstring>(env->GetObjectField(config, s_config_name));
+  jint type = env->GetIntField(config, s_config_type);
+
+  jni_demo::JniDemoConfig demo_config;
+  demo_config.type = type;
+  demo_config.name = jni_demo::ConvertJStringToStdString(env, name);
+
+  jni_demo::JniDemo* jni_demo = new jni_demo::JniDemo(demo_config);
+  // 将对象的地址设置给kotlin对象的nativeContext成员变量
+  env->SetLongField(thiz, jni_demo::g_jni_demo_native_context_filed_id, reinterpret_cast<jlong>(jni_demo));
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemo_nativeInit(JNIEnv *env, jclass clazz) {
+  // GetFieldID获取类成员变量的的id，获取的不是一个对象的内存地址，而是这个变量的id，方便通过ID来查找变量地址
+  // Returns the field ID for an instance (nonstatic) field of a class.
+  // The field is specified by its name and signature.
+  // The Get<type>Field and Set<type>Field families of accessor functions use field IDs to retrieve object fields.
+  // nativeContext是JniDemo中的成员变量，J是变量的类型，代表Long
+  jni_demo::g_jni_demo_native_context_filed_id = env->GetFieldID(clazz, "nativeContext","J");
+}
+
+/**
+ * 使用kotlin包装jni
+ */
+
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemoKotlin_getConfig(JNIEnv *env, jobject thiz) {
+  jni_demo::JniDemo* jni_demo = reinterpret_cast<jni_demo::JniDemo *>(
+          env->GetLongField(thiz,jni_demo::g_jni_demo_native_context_filed_id));
+  if (jni_demo == nullptr) {
+    return nullptr;
+  }
+
+  static jni_demo::JniClassWrapper<jclass> s_config_class(env, env->FindClass("com/example/learnandroid/jnidemo/JniDemoConfig"));
+  // 获取构造函数
+  static jmethodID s_config_constructor = env->GetMethodID(s_config_class.get(), "<init>", "()V");
+  static jfieldID s_config_name = env->GetFieldID(s_config_class.get(), "name", "Ljava/lang/String;");
+  static jfieldID s_config_type = env->GetFieldID(s_config_class.get(), "type", "I");
+
+  // 创建一个java对象
+  // Constructs a new Java object. The method ID indicates which constructor method to invoke.
+  // This ID must be obtained by calling GetMethodID() with <init> as the method name and void (V) as the return type.
+  jobject object = env->NewObject(s_config_class.get(), s_config_constructor);
+  env->SetIntField(object, s_config_type, jni_demo->config().type);
+  env->SetObjectField(object, s_config_name, env->NewStringUTF(jni_demo->config().name.c_str()));
+
+  return object;
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemoKotlin_setName(JNIEnv *env, jobject thiz,
+                                                            jstring name) {
+  jni_demo::JniDemo* jni_demo = reinterpret_cast<jni_demo::JniDemo *>(
+          env->GetLongField(thiz,jni_demo::g_jni_demo_native_context_filed_id));
+  if (jni_demo != nullptr) {
+    jni_demo->SetName(jni_demo::ConvertJStringToStdString(env, name));
+  }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemoKotlin_nativeFinalize(JNIEnv *env, jobject thiz) {
+  jni_demo::JniDemo* jni_demo = reinterpret_cast<jni_demo::JniDemo *>(
+          env->GetLongField(thiz,jni_demo::g_jni_demo_native_context_filed_id));
+  delete jni_demo;
+  env->SetLongField(thiz, jni_demo::g_jni_demo_native_context_filed_id, 0l);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemoKotlin_newInstance(JNIEnv *env, jobject thiz,
+                                                                jobject config) {
+  static jni_demo::JniClassWrapper<jclass> s_config_class(env, env->FindClass("com/example/learnandroid/jnidemo/JniDemoConfig"));
+  static jfieldID s_config_name = env->GetFieldID(s_config_class.get(), "name", "Ljava/lang/String;");
+  static jfieldID s_config_type = env->GetFieldID(s_config_class.get(), "type", "I");
+
+  // 获取对象成员变量的值
+  jstring name = static_cast<jstring>(env->GetObjectField(config, s_config_name));
+  jint type = env->GetIntField(config, s_config_type);
+
+  jni_demo::JniDemoConfig demo_config;
+  demo_config.type = type;
+  demo_config.name = jni_demo::ConvertJStringToStdString(env, name);
+
+  jni_demo::JniDemo* jni_demo = new jni_demo::JniDemo(demo_config);
+  // 将对象的地址设置给kotlin对象的nativeContext成员变量
+  env->SetLongField(thiz, jni_demo::g_jni_demo_native_context_filed_id, reinterpret_cast<jlong>(jni_demo));
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_learnandroid_jnidemo_JniDemoKotlin_nativeInit(JNIEnv *env, jclass clazz) {
+  jni_demo::g_jni_demo_native_context_filed_id = env->GetFieldID(clazz, "nativeContext","J");
 }
