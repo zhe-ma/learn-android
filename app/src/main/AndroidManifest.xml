@@ -44,6 +44,8 @@
         <activity
             android:name=".activity.CanvasActivity"
             android:exported="false" />
+        <activity android:name=".activity.BlurActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
