@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
             BUTTON_NAME_CAMERA1 to JniDemoActivity::class.java,
             BUTTON_NAME_SHADOW_FRAME_LAYOUT to ShadowFrameLayoutActivity::class.java,
             BUTTON_NAME_WEBVIEW to WebviewActivity::class.java,
-            BUTTON_CANVAS to CanvasActivity::class.java,
-            BUTTON_BLUR to BlurActivity::class.java,
+            BUTTON_CANVAS to CanvasActivity::class.java
         )
     }
 
