@@ -54,6 +54,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.RendererActivity" />
+        <activity
+            android:name=".activity.CircleProgressActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
