@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             BUTTON_CANVAS to CanvasActivity::class.java,
             BUTTON_NAME_CIRCLE_PROGRESS to CircleProgressActivity::class.java,
             BUTTON_NAME_MEDIA_PICKER to PickerActivity::class.java,
+            BUTTON_NAME_OFFSCREEN_RENDER to OffscreenRenderActivity::class.java,
         )
     }
 
