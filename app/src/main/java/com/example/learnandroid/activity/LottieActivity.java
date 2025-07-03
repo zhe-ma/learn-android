@@ -23,8 +23,9 @@ public class LottieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lottie);
 
         LottieAnimationView lottieAnimationView = findViewById(R.id.lottie_view);
-
-        lottieAnimationView.setAnimation("love.json");
+//        http://down.qq.com/shadow_qqcamera/AITaskBox/
+        lottieAnimationView.setAnimation("a.json");
+//        lottieAnimationView.setAnimationFromUrl("https://downv6.qq.com/shadow_qqcamera/AITaskBox/loading_new.json");
         // 可选择软件，硬件，自动渲染。Pag只支持软件渲染
         lottieAnimationView.setRenderMode(RenderMode.AUTOMATIC);
         lottieAnimationView.setRepeatCount(1);

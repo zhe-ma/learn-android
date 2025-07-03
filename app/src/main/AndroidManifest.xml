@@ -45,6 +45,9 @@
             android:name=".activity.CanvasActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.PickerActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
