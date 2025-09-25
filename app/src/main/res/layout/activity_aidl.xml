@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AIDL 并发任务管理系统"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 任务提交区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交新任务"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/task_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="任务名称"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/task_duration_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="持续时间（秒，1-60）"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/submit_task_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提交任务"
+            android:backgroundTint="#4CAF50" />
+
+    </LinearLayout>
+
+    <!-- 控制按钮区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/cancel_task_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消任务"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="#FF9800" />
+
+        <Button
+            android:id="@+id/refresh_status_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="刷新状态"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="#2196F3" />
+
+        <Button
+            android:id="@+id/clear_completed_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="清除完成"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#9C27B0" />
+
+    </LinearLayout>
+
+    <!-- 状态显示区域 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="任务状态"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F5F5F5"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/status_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正在初始化..."
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="#333333" />
+
+    </ScrollView>
+
+</LinearLayout>

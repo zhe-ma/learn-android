@@ -51,6 +51,9 @@
             android:name=".activity.OffscreenRenderActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.AIDLActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -59,6 +62,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- 任务管理服务 - 运行在主进程 -->
+        <service
+            android:name=".service.TaskManagerService"
+            android:enabled="true"
+            android:exported="false" />
         <activity android:name=".activity.RendererActivity" />
         <activity
             android:name=".activity.CircleProgressActivity"

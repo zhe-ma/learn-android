@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
             BUTTON_NAME_CIRCLE_PROGRESS to CircleProgressActivity::class.java,
             BUTTON_NAME_MEDIA_PICKER to PickerActivity::class.java,
             BUTTON_NAME_OFFSCREEN_RENDER to OffscreenRenderActivity::class.java,
-        )
+            BUTTON_NAME_AIDL to AIDLActivity::class.java,
+            )
     }
 
     private val recyclerView: RecyclerView? by lazy { findViewById(R.id.main_activity_rv) }

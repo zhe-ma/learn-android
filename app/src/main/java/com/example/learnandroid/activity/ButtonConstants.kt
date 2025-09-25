@@ -19,4 +19,5 @@ const val BUTTON_CANVAS = "Canvas"
 const val BUTTON_NAME_CIRCLE_PROGRESS = "圆形进度条"
 const val BUTTON_NAME_MEDIA_PICKER = "系统选图器"
 const val BUTTON_NAME_OFFSCREEN_RENDER = "离屏渲染"
+const val BUTTON_NAME_AIDL = "AIDL"
 
