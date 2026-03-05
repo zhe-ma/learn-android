@@ -45,7 +45,8 @@ class MainActivity : AppCompatActivity() {
             BUTTON_NAME_MEDIA_PICKER to PickerActivity::class.java,
             BUTTON_NAME_OFFSCREEN_RENDER to OffscreenRenderActivity::class.java,
             BUTTON_NAME_AIDL to AIDLActivity::class.java,
-            )
+            BUTTON_NAME_IMAGE_CROP to ImageCropActivity::class.java,
+        )
     }
 
     private val recyclerView: RecyclerView? by lazy { findViewById(R.id.main_activity_rv) }

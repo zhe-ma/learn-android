@@ -54,6 +54,9 @@
             android:name=".activity.AIDLActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.ImageCropActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
