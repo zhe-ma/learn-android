@@ -17,7 +17,6 @@ import java.io.OutputStream
 class ImageCropActivity : AppCompatActivity() {
 
     private lateinit var btnPickImage: Button
-    private lateinit var btnReset: Button
     private lateinit var btnSave: Button
     private lateinit var imageCropView: ImageCropView
 
@@ -26,17 +25,12 @@ class ImageCropActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image_crop)
 
         btnPickImage = findViewById(R.id.btnPickImage)
-        btnReset = findViewById(R.id.btnReset)
         btnSave = findViewById(R.id.btnSave)
         imageCropView = findViewById(R.id.imageCropView)
 
         btnPickImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
-        }
-
-        btnReset.setOnClickListener {
-            imageCropView.reset()
         }
 
         btnSave.setOnClickListener {
