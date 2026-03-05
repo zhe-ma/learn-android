@@ -223,10 +223,22 @@ class ImageCropView @JvmOverloads constructor(
         val vh = height.toFloat()
         if (vw <= 0 || vh <= 0) return
 
-        // 裁剪框左右留边距，按图片宽高比计算裁剪框高度
-        val cropW = vw - cropHorizontalPadding * 2
+        // 裁剪框按图片宽高比计算，同时不超出 View 可用区域（左右、上下各留边距）
         val imgRatio = bmp.height.toFloat() / bmp.width.toFloat()
-        val cropH = min(cropW * imgRatio, vh - cropHorizontalPadding * 2)
+        val maxCropW = vw - cropHorizontalPadding * 2
+        val maxCropH = vh - cropHorizontalPadding * 2
+        // 先尝试以宽度为基准，若高度超出则改为以高度为基准反推宽度
+        val cropW: Float
+        val cropH: Float
+        if (maxCropW * imgRatio <= maxCropH) {
+            // 以宽度为基准，高度不超出
+            cropW = maxCropW
+            cropH = maxCropW * imgRatio
+        } else {
+            // 以高度为基准，宽度不超出
+            cropH = maxCropH
+            cropW = maxCropH / imgRatio
+        }
         val cropLeft = (vw - cropW) / 2f
         val cropTop = (vh - cropH) / 2f
 
