@@ -3,22 +3,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#000000">
 
-    <Button
-        android:id="@+id/btnPickImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="选择图片"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
+    <!-- 顶部工具栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-    <ImageView
-        android:id="@+id/imageView"
+        <Button
+            android:id="@+id/btnPickImage"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="选择图片"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#444444"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="重置"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#444444"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+    </LinearLayout>
+
+    <!-- 裁剪视图 -->
+    <com.example.learnandroid.view.ImageCropView
+        android:id="@+id/imageCropView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:background="#f0f0f0" />
+        android:background="#000000" />
+
+    <!-- 底部保存按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:background="#000000">
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="160dp"
+            android:layout_height="44dp"
+            android:text="保存到相册"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF" />
+
+    </LinearLayout>
 
 </LinearLayout>
